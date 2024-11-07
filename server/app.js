@@ -1,33 +1,24 @@
 const express = require('express');
-
+const path = require('path');
+const cors = require('cors'); // Importez le middleware cors
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('Requête reçue !');
-  next();
+// Middlewares et routes API
+app.use(express.json());
+
+// Utilisez le middleware cors
+app.use(cors());
+// Exemples de routes API
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Bonjour depuis le serveur !' });
 });
 
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
-
-// Servir les fichiers statiques du front-end React
+// Servir les fichiers statiques de l'application React
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-// Route pour les requêtes non gérées par l'API (React Router)
+// Gestion des routes inconnues pour React Router
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
-
-app.use((req, res, next) => {
-  res.json({ message: 'Votre requête a bien été reçue !' });
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log('Réponse envoyée avec succès !');
-});
-
 
 module.exports = app;

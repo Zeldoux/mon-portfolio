@@ -1,6 +1,6 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
-import Projects from './comp/Projects';
+import Projects from './comp/projects';
 
 function App() {
   const [projects, setProjects] = useState([]);

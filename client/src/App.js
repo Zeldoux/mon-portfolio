@@ -1,22 +1,25 @@
+// src/App.js
 import React, { useEffect, useState } from 'react';
-
+import Projects from './comp/Projects';
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    fetch('/api/hello')
+    // Fetch projects from your API
+    fetch('/api/projects')
       .then((res) => res.json())
-      .then((data) => setMessage(data.message))
+      .then((data) => setProjects(data))
       .catch((err) => console.error(err));
   }, []);
 
   return (
     <div>
       <h1>Mon Portfolio</h1>
-      <p>{message}</p>
+      {/* Render the Projects component and pass the projects data */}
+      <Projects projects={projects} />
     </div>
   );
 }
 
-export default App
+export default App;

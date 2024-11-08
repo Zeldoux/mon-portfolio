@@ -1,13 +1,6 @@
 const http = require('http');
 const app = require('./app');
 
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_URI, {
-})
-.then(() => console.log('Connexion à MongoDB réussie !'))
-.catch((err) => console.error('Erreur de connexion à MongoDB :', err));
-
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -51,4 +44,6 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+
+// set server to listen to client with port 
+server.listen(process.env.PORT || 3000);

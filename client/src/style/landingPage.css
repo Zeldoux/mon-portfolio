@@ -1,3 +1,4 @@
+
 /* Centre le contenu de la page */
 .landing-page {
     text-align: center;
@@ -31,7 +32,7 @@
 
 /* État de survol avec transformations */
 .logo-container:hover #rect1 {
-    transform: rotate(0deg); /* Tourne le losange pour qu'il devienne un carré */
+    transform: rotate(-45deg); /* Tourne le losange pour qu'il devienne un carré */
 }
 
 .logo-container:hover #barre1 {

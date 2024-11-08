@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../style/landingPage.css';
-import LogoSVG from './logoSVG';
+import '../../style/landingPage.css';
+import LogoSVG from '../../Assets/LogoSVG';
 
 const LandingPage = ({ onEnter }) => {
     const [fadeOut, setFadeOut] = useState(false);

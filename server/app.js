@@ -19,7 +19,7 @@ const app = express();
 // Middlewares et routes API
 app.use(express.json());
 
-// Utilisez le middleware cors
+// Utilisez le middleware cors si nécésaire
 app.use(cors());
 
 

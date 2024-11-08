@@ -1,67 +1,46 @@
-import React, { useEffect, useState } from 'react';
-
-import Projects from './components/projects';
-import Login from './components/login';
-import LandingPage from './components/landingPage';
-
+// App.js
+import React, { useEffect } from 'react';
+import './style/App.css';
+import AppRouter from './Router/AppRouter';
 
 function App() {
-  const [projects, setProjects] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [showLandingPage, setShowLandingPage] = useState(true); // Add this state
-
-  const fetchProjects = () => {
-    fetch('/api/project')
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
-      .catch((err) => console.error(err));
-  };
-
   useEffect(() => {
-    fetchProjects();
+    createParticles(); // Initiate particles on mount
   }, []);
-
-  const handleLogin = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-  };
-
-  const handleEnterSite = () => {
-    setShowLandingPage(false); // Hide the landing page
-  };
 
   return (
     <div className="app">
-      {showLandingPage ? (
-        <LandingPage onEnter={handleEnterSite} />
-      ) : (
-        <div className="main-content">
-          <h1>My Portfolio</h1>
-          {token ? (
-            <>
-              <button onClick={handleLogout}>Logout</button>
-              <Projects
-                projects={projects}
-                setProjects={setProjects}
-                token={token}
-                fetchProjects={fetchProjects}
-              />
-            </>
-          ) : (
-            <>
-              <Login onLogin={handleLogin} />
-              <Projects projects={projects} />
-            </>
-          )}
-        </div>
-      )}
+      <div className="background-overlay">
+          <AppRouter />
+        <div id="particles-container"></div>
+      </div>
     </div>
   );
 }
 
 export default App;
+
+function createParticles() {
+  const container = document.getElementById('particles-container');
+  const particleCount = 40;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    
+    // Randomize position and size
+    particle.style.width = `${Math.random() * 6 + 4}px`;
+    particle.style.height = particle.style.width;
+    particle.style.top = `${Math.random() * 100}vh`;
+    particle.style.left = `${Math.random() * 100}vw`;
+    
+    // Randomize blur for depth effect
+    const blur = Math.random() * 8;
+    particle.style.filter = `blur(${blur}px)`;
+    
+    // Parallax speed (simulated by animation duration)
+    particle.style.animationDuration = `${Math.random() * 5 + 15}s`;
+
+    container.appendChild(particle);
+  }
+}

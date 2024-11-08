@@ -1,0 +1,60 @@
+Mon Portfolio
+
+Un site portfolio dynamique construit avec un frontend React et un backend Node.js/Express, pensé pour un déploiement sur Render.
+
+Architecture du Projet
+
+Le projet se compose de trois parties :
+
+    Root : configuration générale pour le déploiement sur Render.
+    Client : frontend en React, situé dans client/.
+    Server : backend en Node.js/Express, situé dans server/.
+
+Déploiement sur Render
+
+Le projet est configuré pour fonctionner sur Render en tant qu'application monolithique. Le backend sert les fichiers statiques du frontend construits dans client/build.
+Directives Render
+
+    Root Directory : /server
+    Build Command : npm install && npm run heroku-postbuild
+    Start Command : npm start
+
+Explication des Commandes
+
+    Build Command (npm install && npm run heroku-postbuild) : Installe les dépendances à la racine, puis exécute heroku-postbuild pour installer les dépendances backend et construire le frontend.
+    Start Command (npm start) : Démarre le serveur backend, qui sert également les fichiers construits du frontend.
+
+Scripts dans package.json
+
+Principaux scripts utilisés pour le développement et le déploiement :
+
+    start : Lance simultanément le frontend et le backend pour le développement local.
+    server : Démarre uniquement le backend avec nodemon.
+    client : Démarre uniquement le frontend en mode développement.
+    build : Construit le frontend dans client/build.
+    heroku-postbuild : Installe les dépendances backend et construit le frontend pour le déploiement.
+
+Démarrage en Local
+
+Pour exécuter le projet localement :
+
+    Clonez le dépôt.
+    Installez les dépendances avec npm install.
+    Utilisez npm start pour lancer le frontend et le backend en mode développement.
+
+Le backend est accessible par défaut sur le port 3000, et le frontend via un proxy configuré.
+Détails du Serveur Express
+
+Dans server/server.js, le backend utilise express.static pour servir le frontend :
+
+// Servir les fichiers statiques de l'application React
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+Séparation Frontend et Backend pour Hébergement Indépendant
+
+Pour héberger le frontend et le backend séparément :
+
+    Backend : Supprimez ou commentez express.static dans le backend pour ne plus servir le frontend. Le backend sera alors une API indépendante.
+    Frontend : Hébergez le frontend sur un service comme Netlify ou Vercel, et configurez-le pour envoyer les requêtes API au backend (en utilisant un proxy ou une URL d’API dans un fichier d’environnement).
+
+Cela permet de déployer et mettre à jour chaque partie indépendamment.

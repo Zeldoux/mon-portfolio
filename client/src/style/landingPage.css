@@ -1,0 +1,47 @@
+/* Centre le contenu de la page */
+.landing-page {
+    text-align: center;
+    padding-top: 20%;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+.landing-page.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Styles pour le logo SVG et l'animation */
+.landing-logo {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+/* Transition initiale pour le losange */
+#rect1 {
+    transition: transform 0.5s ease;
+    transform-origin: center;
+}
+
+/* Styles initiaux pour les barres */
+#barre1, #barre2, #barre0 {
+    transition: transform 0.5s ease;
+}
+
+/* État de survol avec transformations */
+.logo-container:hover #rect1 {
+    transform: rotate(0deg); /* Tourne le losange pour qu'il devienne un carré */
+}
+
+.logo-container:hover #barre1 {
+    transform: translate(-15px, 15px); /* Déplace la première barre */
+}
+
+.logo-container:hover #barre2 {
+    transform: translateY(-15px); /* Déplace la barre centrale */
+}
+
+.logo-container:hover #barre0 {
+    transform: translate(15px, 15px); /* Déplace la troisième barre */
+}

@@ -1,0 +1,61 @@
+Client du Portfolio
+
+Ce répertoire contient le frontend de l'application portfolio , construit avec React. Il inclut plusieurs bibliothèques pour la gestion des images, le test, et l'optimisation des performances.
+Scripts Disponibles
+
+Les scripts principaux sont définis dans package.json pour faciliter le développement et le déploiement :
+
+    npm start : Démarre l'application en mode développement sur http://localhost:3000. Utilise le proxy configuré (http://localhost:3000) pour rediriger les requêtes API vers le backend.
+    npm run build : Construit l'application pour la production dans le dossier build. Optimise les fichiers pour le déploiement (minification, suppression des warnings).
+    npm test : Lance les tests en mode interactif, en utilisant Testing Library.
+    npm run eject : Permet d'extraire les configurations par défaut de react-scripts pour avoir un contrôle total sur la configuration de Webpack et des autres outils. ⚠️ Attention : une fois exécuté, cette opération est irréversible.
+
+Gestion des Images avec Cloudinary
+
+Le frontend utilise Cloudinary pour gérer les images et les optimiser pour les performances :
+
+    Chargement et Transformation : Les images sont hébergées sur Cloudinary, ce qui permet un chargement rapide grâce au CDN de Cloudinary. Les images peuvent être transformées directement dans le frontend (taille, effets, animations) avec les bibliothèques @cloudinary/react et @cloudinary/url-gen.
+
+    Exemple d'utilisation :
+
+    import { Cloudinary } from "@cloudinary/url-gen";
+    import { AdvancedImage } from "@cloudinary/react";
+
+    const cld = new Cloudinary({
+        cloud: {
+            cloudName: 'votre-cloud-name'
+        }
+    });
+
+    const myImage = cld.image('path/to/image'); // Chemin de l'image sur Cloudinary
+
+    const Component = () => (
+        <AdvancedImage cldImg={myImage} />
+    );
+
+Cette configuration permet de charger des images optimisées pour chaque écran et de les transformer dynamiquement pour des animations ou des effets visuels.
+Configuration de browserslist
+
+La configuration browserslist dans package.json assure la compatibilité avec les navigateurs récents en production, tout en facilitant le développement sur les dernières versions des navigateurs populaires.
+
+"browserslist": {
+  "production": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "development": [
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 safari version"
+  ]
+}
+
+Démarrage en Local
+
+Pour exécuter le frontend en local :
+
+    Clonez le projet.
+    Accédez au répertoire client avec cd client.
+    Installez les dépendances avec npm install.
+    Lancez l'application en mode développement avec npm start.

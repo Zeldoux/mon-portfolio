@@ -1,0 +1,69 @@
+Principales Dépendances
+
+Le backend utilise les bibliothèques suivantes :
+
+    express : Framework Node.js pour gérer les routes et les middlewares.
+    mongoose : Bibliothèque pour connecter et interagir avec MongoDB.
+    cors : Middleware pour permettre les requêtes cross-origin (essentiel pour le frontend si les deux sont hébergés séparément).
+    dotenv : Permet de charger des variables d'environnement depuis un fichier .env pour des configurations sécurisées.
+    jsonwebtoken : Utilisé pour créer et vérifier les tokens d'authentification des utilisateurs.
+    bcrypt : Bibliothèque pour hasher les mots de passe de manière sécurisée.
+    path : Utilisé pour gérer les chemins de fichiers pour servir le frontend statique et les images.
+
+Scripts Disponibles
+
+Les scripts principaux sont définis dans le package.json pour faciliter le développement et le déploiement :
+
+    npm start : Démarre le serveur en production avec node server.js.
+    npm run dev : Démarre le serveur en mode développement avec nodemon, pour un rechargement automatique à chaque modification du code.
+    heroku-postbuild : Exécute les commandes nécessaires pour installer les dépendances du frontend et le construire dans client/build, afin que le serveur puisse le servir en production.
+
+Structure du Serveur
+Connexion à MongoDB
+
+Le serveur se connecte à MongoDB en utilisant mongoose.connect, en récupérant l'URI de la base de données via une variable d'environnement définie dans le fichier .env :
+
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch((err) => console.error('Erreur de connexion à MongoDB :', err));
+
+Routes et Middlewares
+
+    Middlewares :
+        express.json() : Permet de lire le corps des requêtes en JSON.
+        cors() : Active les requêtes cross-origin pour les appels API depuis le frontend.
+    Routes :
+        /api/project : Routes pour la gestion des projets (importées depuis ./routes/projectRoutes).
+        /api/auth : Routes d'authentification pour gérer l'inscription et la connexion des utilisateurs (importées depuis ./routes/authRoutes).
+        /images : Sert les images depuis le dossier images.
+
+Serveur du Frontend
+
+Le backend est configuré pour servir les fichiers statiques du frontend React dans un déploiement monolithique. Voici la ligne correspondante :
+
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+Gestion des Routes pour React Router
+
+Pour gérer les routes inconnues côté backend et rediriger vers le frontend, le serveur inclut cette route par défaut :
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
+
+Cela garantit que toutes les routes non reconnues sont redirigées vers l'application React, permettant ainsi à React Router de gérer les navigations côté client.
+Démarrage en Local
+
+Pour exécuter le serveur en local :
+
+    Clonez le dépôt et accédez au répertoire server.
+    Créez un fichier .env avec la variable MONGODB_URI contenant l'URI de votre base de données MongoDB.
+    Installez les dépendances avec npm install.
+    Lancez le serveur en mode développement avec npm run dev.
+
+Rôle de heroku-postbuild dans une Architecture Monolithique
+
+Dans une architecture monolithique :
+
+    heroku-postbuild exécute deux actions : elle installe les dépendances du client et construit le frontend dans le dossier client/build.
+    Le backend est configuré pour servir ce dossier client/build comme des fichiers statiques, ce qui permet au serveur Express de distribuer l'application frontend aux utilisateurs.

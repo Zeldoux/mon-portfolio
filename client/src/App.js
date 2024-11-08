@@ -1,11 +1,14 @@
-// src/App.js
 import React, { useEffect, useState } from 'react';
+
 import Projects from './components/projects';
 import Login from './components/login';
+import LandingPage from './components/landingPage';
+
 
 function App() {
   const [projects, setProjects] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [showLandingPage, setShowLandingPage] = useState(true); // Add this state
 
   const fetchProjects = () => {
     fetch('/api/project')
@@ -15,7 +18,6 @@ function App() {
   };
 
   useEffect(() => {
-    // Fetch projects when the component mounts
     fetchProjects();
   }, []);
 
@@ -29,19 +31,34 @@ function App() {
     setToken(null);
   };
 
+  const handleEnterSite = () => {
+    setShowLandingPage(false); // Hide the landing page
+  };
+
   return (
-    <div>
-      <h1>My Portfolio</h1>
-      {token ? (
-        <>
-          <button onClick={handleLogout}>Logout</button>
-          <Projects projects={projects} setProjects={setProjects} token={token} fetchProjects={fetchProjects} />
-        </>
+    <div className="app">
+      {showLandingPage ? (
+        <LandingPage onEnter={handleEnterSite} />
       ) : (
-        <>
-          <Login onLogin={handleLogin} />
-          <Projects projects={projects} />
-        </>
+        <div className="main-content">
+          <h1>My Portfolio</h1>
+          {token ? (
+            <>
+              <button onClick={handleLogout}>Logout</button>
+              <Projects
+                projects={projects}
+                setProjects={setProjects}
+                token={token}
+                fetchProjects={fetchProjects}
+              />
+            </>
+          ) : (
+            <>
+              <Login onLogin={handleLogin} />
+              <Projects projects={projects} />
+            </>
+          )}
+        </div>
       )}
     </div>
   );

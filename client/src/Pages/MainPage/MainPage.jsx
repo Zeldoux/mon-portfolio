@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import LandingPage from './LandingPage';
 import Login from '../../components/Login';
-//import Profile from '../components/Profile';
-//import Skills from '../components/Skills';
+import Profile from '../../components/Profile';
+// import Skills from '../../components/Skills';
 import Projects from '../../components/Projects';
 
 const MainPage = () => {
@@ -37,31 +37,36 @@ const MainPage = () => {
   };
 
   return (
-    <div className="main-page">
+    <section className="main-page">
       {showLandingPage ? (
-        <LandingPage onEnter={handleEnterSite} />
-      ) : (
-        <>
-          {/* Main content available to everyone */}
-          
-          <Projects
-            projects={projects}
-            setProjects={setProjects}
-            token={token} // Pass token to conditionally render add/delete options
-            fetchProjects={fetchProjects}
-          />
+          <LandingPage onEnter={handleEnterSite} />
+        ) : (
+          <>
+            <article className="profile-section">
+              <Profile />
+            </article>
 
-          {/* Show login form if not authenticated */}
-          {!token && <Login onLogin={handleLogin} />}
+            <section className="projects-section">
+              <h2>Projects</h2>
+              <Projects
+                projects={projects}
+                setProjects={setProjects}
+                token={token}
+                fetchProjects={fetchProjects}
+              />
+            </section>
 
-          {/* Logout button for authenticated users */}
-          {token && (
-            <button onClick={handleLogout}>Logout</button>
-          )}
+            <section className="login-section">
+              {!token ? (
+                <Login onLogin={handleLogin} />
+              ) : (
+                <button onClick={handleLogout}>Logout</button>
+              )}
+            </section>
         </>
-      )}
-    </div>
-  );
+    )}
+    </section>
+);
 };
 
 export default MainPage;

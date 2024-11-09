@@ -21,11 +21,8 @@ function Projects({ projects, setProjects, token, fetchProjects }) {
         return res.json();
       })
       .then((data) => {
-        // Option 1: Fetch projects again
+        
         fetchProjects();
-        // Option 2: Update projects state directly
-        // setProjects([...projects, data]);
-        // Reset the form
         setNewProject({ title: '', description: '', image: '', link: '' });
       })
       .catch((err) => {
@@ -48,10 +45,9 @@ function Projects({ projects, setProjects, token, fetchProjects }) {
         return res.json();
       })
       .then(() => {
-        // Option 1: Fetch projects again
+      
         fetchProjects();
-        // Option 2: Update projects state directly
-        // setProjects(projects.filter((project) => project._id !== id));
+
       })
       .catch((err) => {
         console.error(err);

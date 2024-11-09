@@ -1,13 +1,13 @@
-// index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App'; // Import App as the main application wrapper
 import reportWebVitals from './reportWebVitals';
+import AppRouter from './Router/AppRouter';
+import './style/App.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AppRouter /> {/* Main application routing */}
   </React.StrictMode>
 );
 

@@ -13,6 +13,7 @@ import MainPage from '../Pages/MainPage/MainPage';
 import Dashboard from '../Pages/AdminPage/AdminPage';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 
+
 const AppRouter = ({ token }) => {
     return (
         <Router>

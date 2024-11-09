@@ -1,0 +1,34 @@
+/* Basic navbar styling */
+.navbar {
+    width: 100%;
+    padding: 1rem 2rem;
+    background-color: #121212;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    position: absolute; /* Initial position */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  .navbar.sticky {
+    position: fixed; /* Change to fixed when scrolling */
+    top: 0;
+    background-color: #1a1a1a; /* Change color if desired */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .navbar-links a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .navbar-links a:hover {
+    color: #00aaff; /* Optional hover effect */
+  }

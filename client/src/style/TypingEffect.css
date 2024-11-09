@@ -1,0 +1,10 @@
+.typing-text {
+    color: black;
+    font-size: 2rem;
+    border-right: 2px solid black; /* Curseur clignotant */
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  

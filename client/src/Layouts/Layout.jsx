@@ -1,15 +1,23 @@
-// Layout.js
+
 import React from 'react';
-//import Header from './Header';
+import '../style/layout.css'
+import ParticleBackground from '../components/ParticleBackground'
 //import Footer from './Footer';
 
+
+import Header from '../components/Header'
 const Layout = ({ children }) => {
   return (
-    <div className="layout">
+    <>
+      <ParticleBackground />
+      <Header/> 
+      <main>
+        
+        {children} {/* This will render the page content */}
+      </main>
+      </>
       
-      <main className="main-content">{children}</main>
-      
-    </div>
+    
   );
 };
 

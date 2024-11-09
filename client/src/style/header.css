@@ -1,0 +1,94 @@
+/* Transparent, blurry background */
+.header {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
+    color: #ffffff;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* White border with transparency */
+    backdrop-filter: blur(10px); /* Blurry effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+     margin-bottom: 20px;
+  }
+  
+.header.sticky {
+    position: fixed;
+    top: 0;
+  }
+  
+/* Container for the logo with fixed width/height */
+.header-logo-container {
+    width: 50px; /* Set desired width */
+    height: 50px; /* Set desired height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Make SVG take full size of container */
+.header-logo {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+  }
+  
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  
+.nav-links a:hover {
+    color: #000000; /* Optional hover color */
+  }
+
+
+/* Make the SVG responsive within the container */
+.header-logo {
+    width: 100%;
+    height: 100%;
+}
+
+
+#rect1 {
+    transition: transform 0.5s ease;
+    transform-origin: center;
+}
+
+
+#barre1, #barre2, #barre0 {
+    transition: transform 0.5s ease;
+}
+
+
+.header-logo-container:hover #rect1 {
+    transform: rotate(-45deg); 
+}
+
+.header-logo-container:hover #barre1 {
+    transform: translate(-15px, 15px); 
+}
+
+.header-logo-container:hover #barre2 {
+    transform: translateY(-15px); 
+}
+
+.header-logo-container:hover #barre0 {
+    transform: translate(15px, 15px); 
+}
+
+main {
+    padding-top:80px;
+}

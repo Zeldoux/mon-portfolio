@@ -1,10 +1,16 @@
 
 /* Centre le contenu de la page */
 .landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
     text-align: center;
-    padding-top: 20%;
     opacity: 1;
     transition: opacity 1s ease-in-out;
+    margin: 0 auto;
+    
 }
 
 .landing-page.fade-out {
@@ -12,37 +18,46 @@
     pointer-events: none;
 }
 
-/* Styles pour le logo SVG et l'animation */
-.landing-logo {
-    width: 100px;
-    height: 100px;
+/* Container for the logo with fixed size */
+.logo-container {
+    width: 200px; 
+    height: 200px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
-/* Transition initiale pour le losange */
+/* Make the SVG responsive within the container */
+.landing-logo {
+    width: 100%;
+    height: 100%;
+}
+
+
 #rect1 {
     transition: transform 0.5s ease;
     transform-origin: center;
 }
 
-/* Styles initiaux pour les barres */
+
 #barre1, #barre2, #barre0 {
     transition: transform 0.5s ease;
 }
 
-/* État de survol avec transformations */
+
 .logo-container:hover #rect1 {
-    transform: rotate(-45deg); /* Tourne le losange pour qu'il devienne un carré */
+    transform: rotate(-45deg); 
 }
 
 .logo-container:hover #barre1 {
-    transform: translate(-15px, 15px); /* Déplace la première barre */
+    transform: translate(-15px, 15px); 
 }
 
 .logo-container:hover #barre2 {
-    transform: translateY(-15px); /* Déplace la barre centrale */
+    transform: translateY(-15px); 
 }
 
 .logo-container:hover #barre0 {
-    transform: translate(15px, 15px); /* Déplace la troisième barre */
+    transform: translate(15px, 15px); 
 }

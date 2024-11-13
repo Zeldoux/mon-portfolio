@@ -1,32 +1,43 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-// Import components from react-router-dom for routing. 
-// `BrowserRouter` is renamed as `Router` for simplicity. 
-// `Routes` is the component that handles routing, and `Route` defines individual routes.
-
-// import of layout 
+// Import components
 import Layout from '../Layouts/Layout';
-
-// import of Page
 import MainPage from '../Pages/MainPage/MainPage';
-import Dashboard from '../Pages/AdminPage/AdminPage';
+import AdminPage from '../Pages/AdminPage/AdminPage';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
-
+import ProtectedRoute from '../Router/ProtectedRoute';
 
 const AppRouter = ({ token }) => {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Layout><MainPage /></Layout>} />
-                
-                {/* Protected route for personal dashboard */}
-                {token && (
-                    <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-                )}
+
+                {/* Protected route for admin page */}
+                <Route
+                    path="/adminpage"
+                    element={
+                        <ProtectedRoute token={token} message="Access denied. You are not authorized to view this page.">
+                            <Layout><AdminPage /></Layout>
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* Error page */}
+                <Route path="/error" element={<Layout><ErrorPage /></Layout>} />
 
                 {/* Fallback for undefined routes */}
-                <Route path="*" element={<Layout><ErrorPage /></Layout>} />
+                <Route
+                    path="*"
+                    element={
+                        <Navigate
+                            to="/error"
+                            replace
+                            state={{ message: "Page not found. The page you are looking for does not exist." }}
+                        />
+                    }
+                />
             </Routes>
         </Router>
     );

@@ -1,22 +1,106 @@
+/* Main Layout */
 .layout {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    min-height: 100vh; /* Full viewport height to maintain footer positioning */
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.main-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   
-  .header {
-    flex: 0 0 auto; /* Allow the header to take its natural height */
-  }
-  
-  .main-content {
-    flex: 1; /* Main content takes the remaining space */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center align content if desired */
-    padding: 20px; /* Adjust padding as needed */
-  }
-  
-  /* Optional Footer */
-  .footer {
-    flex: 0 0 auto;
-  }
+  overflow: hidden; /* Prevents overflow on main page */
+  padding: 20px; /* Removes extra padding */
+}
+
+/* Section Container */
+.section-container {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 50px;
+  border-radius: 15px;
+  overflow: hidden; /* Ensures border and cut effect are contained */
+}
+
+/* Default Section Container Border (left cut) */
+.section-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -250px; /* Start outside the section */
+  right: 0; /* Cover the full width */
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.8); /* White border effect */
+  border-radius: 15px; /* Smooth corners */
+  transform: skew(-20deg); /* Diagonal cut on the left */
+  z-index: -1;
+}
+
+/* For right-positioned sections (Right cut) */
+.section-container.right::before {
+  left: auto;
+  right: -250px; /* Start outside the section on the right */
+  transform: skew(20deg); /* Diagonal cut on the right */
+}
+
+/* Title Banner Styling */
+.title-banner {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.title-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -40px;
+  right: -40px;
+  background: linear-gradient(135deg, rgba(50, 50, 50, 0.3), rgba(0, 0, 0, 0.7)); /* Dark background */
+  opacity: 0.85;
+  transform: skew(-20deg); /* Diagonal cut */
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+/* Hover effect title */
+.title-banner:hover::before {
+  opacity: 0.95;
+  transform: skew(-20deg) scale(1.05); /* scaling effect */
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+
+/* Profile Section */
+.profile-section, .Skills-section, .projects-section, .login-section {
+  width: 100%;
+  max-width: 1200px; /* Ensures consistent width across sections */
+}
+
+/* Sections custom alignment */
+.profile-section {
+  align-self: flex-start; /* Aligns profile section to the left */
+}
+
+.Skills-section {
+  align-self: flex-end; /* Aligns skills section to the right */
+}
+
+.projects-section {
+  align-self: center; /* Centers projects section */
+}
+
+.login-section {
+  align-self: flex-end; /* Aligns login section to the right */
+}

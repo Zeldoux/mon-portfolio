@@ -1,7 +1,7 @@
 .typing-text {
     color: black;
     font-size: 2rem;
-    border-right: 2px solid black; /* Curseur clignotant */
+    border-right: 2px solid black; /* clicking cursor style */
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;

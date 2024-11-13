@@ -1,22 +1,7 @@
 // src/components/ProjectList.js
 import React from 'react';
 
-function ProjectList({ projects, token, fetchProjects }) {
-  const handleDeleteProject = (id) => {
-    fetch(`/api/project/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to delete project');
-        return res.json();
-      })
-      .then(() => fetchProjects())
-      .catch((err) => console.error(err));
-  };
-
+function ProjectList({ projects }) {
   return (
     <ul>
       {projects.map((project) => (
@@ -30,9 +15,6 @@ function ProjectList({ projects, token, fetchProjects }) {
                 View Project
               </a>
             </p>
-          )}
-          {token && (
-            <button onClick={() => handleDeleteProject(project._id)}>Delete Project</button>
           )}
         </li>
       ))}

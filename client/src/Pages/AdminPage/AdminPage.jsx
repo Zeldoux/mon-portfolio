@@ -1,9 +1,9 @@
+// src/Pages/AdminPage.js
 import React, { useState, useEffect } from 'react';
-import LandingPage from '../../Pages/MainPage/LandingPage';
+import LandingPage from '../MainPage/LandingPage';
 import Login from '../../components/Login';
-//import Profile from '../components/Profile';
-//import Skills from '../components/Skills';
 import Projects from '../../components/Projects';
+import ProjectsAddForm from '../../components/ProjectForm';
 
 const AdminPage = () => {
   const [showLandingPage, setShowLandingPage] = useState(true);
@@ -37,30 +37,26 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="main-page">
+    <main>
       {showLandingPage ? (
         <LandingPage onEnter={handleEnterSite} />
       ) : (
         <>
-          {/* Main content available to everyone */}
-          
+           {token && (
+            <ProjectsAddForm token={token} fetchProjects={fetchProjects} />
+            )}
           <Projects
             projects={projects}
             setProjects={setProjects}
-            token={token} // Pass token to conditionally render add/delete options
+            token={token}
             fetchProjects={fetchProjects}
           />
 
-          {/* Show login form if not authenticated */}
           {!token && <Login onLogin={handleLogin} />}
-
-          {/* Logout button for authenticated users */}
-          {token && (
-            <button onClick={handleLogout}>Logout</button>
-          )}
+          {token && <button onClick={handleLogout}>Logout</button>}
         </>
       )}
-    </div>
+    </main>
   );
 };
 

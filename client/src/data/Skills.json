@@ -1,0 +1,72 @@
+[
+    {
+      "category": "Web Development",
+      "skills": [
+        {
+          "name": "JavaScript",
+          "level": "Advanced",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341124/js_cgigri.png"
+        },
+        {
+          "name": "HTML",
+          "level": "Expert",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341130/html_dl06nt.png"
+        },
+        {
+          "name": "CSS",
+          "level": "Expert",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341580/css_ed69gl.png"
+        },
+        {
+          "name": "React",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341123/react_akyygj.png"
+        },
+        {
+          "name": "NodeJs",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342214/node-js_gchm8l.png"
+        }
+      ]
+    },
+    {
+      "category": "DevOps",
+      "skills": [
+        {
+          "name": "Apache",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342744/Apache_xitgjw.png"
+        },
+        {
+          "name": "MySQL",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342957/MySQL_stlfuj.png"
+        },
+        {
+          "name": "MongoDB",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343033/MongoDB_oo3o9n.png"
+        }
+      ]
+    },
+    {
+      "category": "Game Development",
+      "skills": [
+        {
+          "name": "MonoGame",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343108/monogame_npkibd.webp"
+        },
+        {
+          "name": "Love2D",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343456/love2dd_iun8vu.png"
+        },
+        {
+          "name": "Godot",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343568/Godot_r4xvji.png"
+        }
+      ]
+    }
+]

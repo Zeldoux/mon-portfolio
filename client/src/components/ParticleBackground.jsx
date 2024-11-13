@@ -74,7 +74,7 @@ const ParticleBackground = () => {
   }, []);
 
   return (
-    <canvas
+    <canvas className='background-container'
       ref={canvasRef}
       style={{
         position: 'fixed',

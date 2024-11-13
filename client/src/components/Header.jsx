@@ -17,7 +17,7 @@ const Header = () => {
     <header className={`header ${isSticky ? 'sticky' : ''}`}>
       <nav>
         <div className="header-logo-container">
-            <LogoSVG className="header-logo" />
+          <LogoSVG className="header-logo" />
         </div>
         <ul className="nav-links">
           <li><a href="#profile">Profile</a></li>

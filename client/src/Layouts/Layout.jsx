@@ -6,15 +6,18 @@ import ParticleBackground from '../components/ParticleBackground'
 
 
 import Header from '../components/Header'
+import Footer from '../components/Footer'
+
 const Layout = ({ children }) => {
   return (
     <>
       <ParticleBackground />
       <Header/> 
-      <main>
+      <main className="main-page">
         
         {children} {/* This will render the page content */}
       </main>
+      <Footer />
       </>
       
     

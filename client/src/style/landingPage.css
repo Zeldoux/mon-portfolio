@@ -1,16 +1,21 @@
-
-/* Centre le contenu de la page */
+/* landing page style */
 .landing-page {
     display: flex;
+    min-height: calc(100vh - 160px); /* Leaves space for the footer (adjust 60px as per footer height) */
+    overflow: hidden; /* Prevents extra scroll on the landing page */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; 
     text-align: center;
     opacity: 1;
     transition: opacity 1s ease-in-out;
     margin: 0 auto;
-    
+}
+
+/* Landing page content, if any scrolling is needed */
+.landing-page-content {
+    width: 100%;
+    padding: 20px;
 }
 
 .landing-page.fade-out {

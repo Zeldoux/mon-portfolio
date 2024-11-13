@@ -1,29 +1,29 @@
 /* Transparent, blurry background */
+/* Header styling */
 .header {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
-    color: #ffffff;
-    transition: all 0.3s ease;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* White border with transparency */
-    backdrop-filter: blur(10px); /* Blurry effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
-     margin-bottom: 20px;
-  }
-  
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
+  color: #ffffff;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Optional bottom border */
+  backdrop-filter: blur(10px); /* Blurry effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  z-index: 1000;
+  position: sticky;
+  top: 0; /* Sticks the header to the top on scroll */
+}
+
+/* Style for the sticky effect */
 .header.sticky {
-    position: fixed;
-    top: 0;
-  }
+  background-color: rgba(0, 0, 0, 0.8); /* Darker background when sticky */
+}
+
   
 /* Container for the logo with fixed width/height */
 .header-logo-container {
-    width: 50px; /* Set desired width */
-    height: 50px; /* Set desired height */
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;

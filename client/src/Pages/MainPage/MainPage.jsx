@@ -1,13 +1,13 @@
+// src/Pages/MainPage.js
 import React, { useState, useEffect } from 'react';
 import LandingPage from './LandingPage';
-import Login from '../../components/Login';
+// import Login from '../../components/Login';
 import Profile from '../../components/Profile';
-// import Skills from '../../components/Skills';
 import Projects from '../../components/Projects';
-
+import Skills from '../../components/Skills';
+import Contact from '../../components/Contact'
 const MainPage = () => {
   const [showLandingPage, setShowLandingPage] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('token'));
   const [projects, setProjects] = useState([]);
 
   // Fetch projects on component mount
@@ -22,51 +22,34 @@ const MainPage = () => {
       .catch((err) => console.error(err));
   };
 
-  const handleLogin = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-  };
-
   const handleEnterSite = () => {
     setShowLandingPage(false); // Hide the landing page to show main content
   };
 
   return (
-    <section className="main-page">
+    <>
       {showLandingPage ? (
-          <LandingPage onEnter={handleEnterSite} />
-        ) : (
-          <>
-            <article className="profile-section">
-              <Profile />
-            </article>
-
-            <section className="projects-section">
-              <h2>Projects</h2>
-              <Projects
-                projects={projects}
-                setProjects={setProjects}
-                token={token}
-                fetchProjects={fetchProjects}
-              />
-            </section>
-
-            <section className="login-section">
-              {!token ? (
-                <Login onLogin={handleLogin} />
-              ) : (
-                <button onClick={handleLogout}>Logout</button>
-              )}
-            </section>
+        <article className="home-section">
+        <LandingPage onEnter={handleEnterSite} />
+        </article>
+      ) : (
+        <>
+          <article className="profile-section">
+            <Profile />
+          </article>
+          <article className="Skills-section">
+            <Skills />
+          </article>
+          <article className="projects-section">
+            <Projects projects={projects} />
+          </article>
+          <article className="Contact-section">
+            <Contact />
+          </article>
         </>
-    )}
-    </section>
-);
+      )}
+    </>
+  );
 };
 
 export default MainPage;

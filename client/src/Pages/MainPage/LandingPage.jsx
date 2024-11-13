@@ -19,22 +19,24 @@ const LandingPage = ({ onEnter }) => {
     }, [fadeOut, onEnter]);
 
     return (
-        <div className={`landing-page ${fadeOut ? 'fade-out' : ''}`}>
-            <h1> <TypingEffect
-          phrases={[
-            "Bienvenue sur le Portfolio de Yoann Sousa",
-            "Développeur web",
-            "Passionné de programmation",
-          ]}
-            typingSpeed={80}  // typing speed
-            deleteSpeed={50}   // delete speed
-            pause={500}       // pause between sentence
-            />
-        </h1>
-            <div className="logo-container" onClick={handleLogoClick}>
+        <article className={`landing-page ${fadeOut ? 'fade-out' : ''}`}>
+            
+                <h1> <TypingEffect
+                    phrases={[
+                        "Bienvenue sur le Portfolio de Yoann Sousa",
+                        "Développeur web",
+                        "Passionné de programmation",
+                    ]}
+                        typingSpeed={80}  // typing speed
+                        deleteSpeed={50}   // delete speed
+                        pause={500}       // pause between sentence
+                        />
+                </h1>
+            <section className="logo-container" onClick={handleLogoClick}>
                 <LogoSVG className="landing-logo" />
-            </div>
-        </div>
+            </section>
+            
+        </article>
     );
 };
 

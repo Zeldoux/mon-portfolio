@@ -1,3 +1,4 @@
+// middleware/auth.js
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
@@ -8,8 +9,9 @@ module.exports = (req, res, next) => {
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Received token:', token);
 
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     req.auth = { userId: decodedToken.userId };
 
     console.log('Authenticated userId:', req.auth.userId);

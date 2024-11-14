@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from 'react';
+// src/components/Header.js
+import React from 'react';
 import '../style/header.css';
 import LogoSVG from '../Assets/LogoSVG';
 
-const Header = () => {
-  const [isSticky, setIsSticky] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <header className={`header ${isSticky ? 'sticky' : ''}`}>
-      <nav>
-        <div className="header-logo-container">
-          <LogoSVG className="header-logo" />
-        </div>
-        <ul className="nav-links">
-          <li><a href="#profile">Profile</a></li>
-          <li><a href="#skills">Compétences</a></li>
-          <li><a href="#projects">Projets</a></li>
-          <li><a href="#contact">Me Contacter</a></li>
-        </ul>
-      </nav>
-    </header>
-  );
-};
+const Header = ({ isLoggedIn, onLoginClick, onLogoutClick }) => (
+  <header className="header">
+    <nav>
+      <div className="header-logo-container">
+        <LogoSVG className="header-logo" />
+      </div>
+      <ul className="nav-links">
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        {isLoggedIn ? (
+          <li><button onClick={onLogoutClick}>Logout</button></li>
+        ) : (
+          <li><button onClick={onLoginClick}>Login</button></li>
+        )}
+      </ul>
+    </nav>
+  </header>
+);
 
 export default Header;

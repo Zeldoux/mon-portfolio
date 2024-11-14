@@ -14,6 +14,7 @@ const ParticleBackground = () => {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    let animationFrameId;
 
     // Function to create particles
     const createParticles = () => 
@@ -33,7 +34,7 @@ const ParticleBackground = () => {
 
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = createGradient(pulseFactorRef.current);
+      ctx.fillStyle = createGradient(ctx, pulseFactorRef.current);
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Animate each wave of particles
@@ -48,14 +49,16 @@ const ParticleBackground = () => {
           ctx.fillStyle = p.color;
           ctx.fill();
         });
+        
       };
 
       animateWave(particlesWave1.current); // First wave
       animateWave(particlesWave2.current); // Second wave
 
       pulseFactorRef.current = 0.06 + Math.sin(Date.now() * pulseVariationSpeed) * 0.03;
-
-      requestAnimationFrame(animateParticles);
+      animationFrameId = requestAnimationFrame(animateParticles);
+      
+      
     }
 
     animateParticles();
@@ -70,6 +73,7 @@ const ParticleBackground = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -91,19 +95,14 @@ const ParticleBackground = () => {
 export default ParticleBackground;
 
 // Create gradient function
-function createGradient(pulseFactor) {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
+function createGradient(ctx, pulseFactor) {
   const gradient = ctx.createRadialGradient(
-    canvas.width * 0.5, 
-    canvas.height * 0.5,
+    ctx.canvas.width * 0.5,
+    ctx.canvas.height * 0.5,
     0,
-    canvas.width * 0.5 + pulseFactor * 100,
-    canvas.height * 0.5 + pulseFactor * 100,
-    canvas.width
+    ctx.canvas.width * 0.5 + pulseFactor * 100,
+    ctx.canvas.height * 0.5 + pulseFactor * 100,
+    ctx.canvas.width
   );
 
   gradient.addColorStop(0, `rgba(15, 15, 15, ${pulseFactor + 0.1})`);
@@ -113,3 +112,4 @@ function createGradient(pulseFactor) {
 
   return gradient;
 }
+

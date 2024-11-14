@@ -1,23 +1,27 @@
 // src/components/AddProjectForm.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../Context/AuthContext';
 
-function AddProjectForm({ token, fetchProjects }) {
+function AddProjectForm({ fetchProjects }) {
+  const { token } = useContext(AuthContext);
   const [newProject, setNewProject] = useState({
     title: '',
     description: '',
-    image: '',
+    imageUrl: '',
     link: '',
   });
 
   const handleAddProject = (e) => {
     e.preventDefault();
+    const imageUrlArray = newProject.imageUrl.split(',').map(url => url.trim());
+
     fetch('/api/project', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`, // Inclure le jeton
       },
-      body: JSON.stringify(newProject),
+      body: JSON.stringify({ ...newProject, imageUrl: imageUrlArray }),
     })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to add project');
@@ -25,10 +29,11 @@ function AddProjectForm({ token, fetchProjects }) {
       })
       .then(() => {
         fetchProjects();
-        setNewProject({ title: '', description: '', image: '', link: '' });
+        setNewProject({ title: '', description: '', imageUrl: '', link: '' });
       })
       .catch((err) => console.error(err));
   };
+  
 
   return (
     <form onSubmit={handleAddProject}>
@@ -48,9 +53,9 @@ function AddProjectForm({ token, fetchProjects }) {
       />
       <input
         type="text"
-        placeholder="Image URL"
-        value={newProject.image}
-        onChange={(e) => setNewProject({ ...newProject, image: e.target.value })}
+        placeholder="Image URLs (comma-separated)"
+        value={newProject.imageUrls}
+        onChange={(e) => setNewProject({ ...newProject, imageUrl: e.target.value })}
       />
       <input
         type="text"

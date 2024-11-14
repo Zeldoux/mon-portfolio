@@ -2,12 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 //const cors = require('cors');
 
-require('dotenv').config();
 
+
+const contactRoutes = require('./routes/contactRoutes');
 const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const path = require('path');
 
+require('dotenv').config();
 
 mongoose.connect(process.env.MONGODB_URI, {
 })
@@ -25,7 +27,7 @@ app.use(express.json());
 
 app.use('/api/project', projectRoutes); // Project routes
 app.use('/api/auth', authRoutes); // Auth routes
-
+app.use('/api/contact', contactRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images'))); // img routes 
 
 

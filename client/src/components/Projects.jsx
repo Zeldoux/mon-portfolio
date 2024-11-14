@@ -5,7 +5,7 @@ import ProjectList from './ProjectsList';
 function Projects({ projects }) {
   return (
     <div className="section-container">
-      <h2 className="title-banner">My Projects</h2>
+      <h2 className="title-banner">Mes Projets</h2>
       <ProjectList projects={projects} />
     </div>
   );

@@ -13,8 +13,8 @@ const Footer = () => {
         <a href="https://github.com/Zeldoux" target="_blank" rel="noopener noreferrer">
           <FaGithub /> GitHub
         </a>
-        <a href="mailto:monadresseemail.com">
-          <FaEnvelope /> monadresseemail
+        <a href="mailto:contacter-moi@ysportfolio.fr">
+          <FaEnvelope /> contacter-moi@ysportfolio.fr
         </a>
       </div>
     </footer>

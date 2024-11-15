@@ -1,68 +1,54 @@
-/* landing page style */
 .landing-page {
-    display: flex;
-    min-height: calc(100vh - 160px); /* Leaves space for the footer (adjust 60px as per footer height) */
-    overflow: hidden; /* Prevents extra scroll on the landing page */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 160px);
+  overflow: hidden;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  margin: 0 auto;
 }
-
-/* Landing page content, if any scrolling is needed */
-.landing-page-content {
-    width: 100%;
-    padding: 20px;
-}
-
 .landing-page.fade-out {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
-
-/* Container for the logo with fixed size */
-.logo-container {
-    width: 200px; 
-    height: 200px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+.landing-page .landing-page-content {
+  width: 100%;
+  padding: 20px;
 }
-
-/* Make the SVG responsive within the container */
-.landing-logo {
-    width: 100%;
-    height: 100%;
+.landing-page .logo-container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
-
-
-#rect1 {
-    transition: transform 0.5s ease;
-    transform-origin: center;
+.landing-page .logo-container .landing-logo {
+  width: 100%;
+  height: 100%;
 }
-
-
-#barre1, #barre2, #barre0 {
-    transition: transform 0.5s ease;
+.landing-page .logo-container #rect1 {
+  transition: transform 0.5s ease;
+  transform-origin: center;
 }
-
-
-.logo-container:hover #rect1 {
-    transform: rotate(-45deg); 
+.landing-page .logo-container #barre1,
+.landing-page .logo-container #barre2,
+.landing-page .logo-container #barre0 {
+  transition: transform 0.5s ease;
 }
-
-.logo-container:hover #barre1 {
-    transform: translate(-15px, 15px); 
+.landing-page .logo-container:hover #rect1 {
+  transform: rotate(-45deg);
 }
-
-.logo-container:hover #barre2 {
-    transform: translateY(-15px); 
+.landing-page .logo-container:hover #barre1 {
+  transform: translate(-15px, 15px);
 }
-
-.logo-container:hover #barre0 {
-    transform: translate(15px, 15px); 
+.landing-page .logo-container:hover #barre2 {
+  transform: translateY(-15px);
 }
+.landing-page .logo-container:hover #barre0 {
+  transform: translate(15px, 15px);
+}/*# sourceMappingURL=LandingPage.css.map */

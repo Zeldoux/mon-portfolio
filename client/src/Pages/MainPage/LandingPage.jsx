@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../style/landingPage.css';
+import '../../style/LandingPage.css';
 import LogoSVG from '../../Assets/LogoSVG';
 import TypingEffect from '../../components/TypingEffect';
 

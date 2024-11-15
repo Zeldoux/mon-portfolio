@@ -5,27 +5,32 @@
         {
           "name": "JavaScript",
           "level": "Advanced",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341124/js_cgigri.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341124/js_cgigri.png",
+          "description": "Bibliothèque JavaScript pour construire des interfaces utilisateur."
         },
         {
           "name": "HTML",
           "level": "Expert",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341130/html_dl06nt.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341130/html_dl06nt.png",
+          "description": "Framework progressif pour construire des interfaces utilisateur."
         },
         {
           "name": "CSS",
           "level": "Expert",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341580/css_ed69gl.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341580/css_ed69gl.png",
+          "description": "FrameWork"
         },
         {
           "name": "React",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341123/react_akyygj.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731341123/react_akyygj.png",
+          "description": "Framework "
         },
         {
           "name": "NodeJs",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342214/node-js_gchm8l.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342214/node-js_gchm8l.png",
+          "description": "Framework "
         }
       ]
     },
@@ -35,17 +40,20 @@
         {
           "name": "Apache",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342744/Apache_xitgjw.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342744/Apache_xitgjw.png",
+          "description": "Framework progressif pour construire des interfaces utilisateur."
         },
         {
           "name": "MySQL",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342957/MySQL_stlfuj.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731342957/MySQL_stlfuj.png",
+          "description": "Framework progressif pour construire des interfaces utilisateur."
         },
         {
           "name": "MongoDB",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343033/MongoDB_oo3o9n.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343033/MongoDB_oo3o9n.png",
+          "description": "Framework progressif pour construire des interfaces utilisateur."
         }
       ]
     },
@@ -55,17 +63,20 @@
         {
           "name": "MonoGame",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343108/monogame_npkibd.webp"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343108/monogame_npkibd.webp",
+          "description": "Framework C# pour la création de jeux vidéos en c# "
         },
         {
           "name": "Love2D",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343456/love2dd_iun8vu.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343456/love2dd_iun8vu.png",
+          "description": "Framework progressif pour construire des interfaces utilisateur."
         },
         {
           "name": "Godot",
           "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343568/Godot_r4xvji.png"
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/v1731343568/Godot_r4xvji.png",
+          "description": "Framework progressif pour construire des interfaces utilisateur."
         }
       ]
     }

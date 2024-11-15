@@ -1,0 +1,12 @@
+@import 'variable';
+@import 'mixins';
+
+body {
+  color: $color-black;
+
+  .container {
+    @include flex-center;
+    
+    height: 100vh;
+  }
+}

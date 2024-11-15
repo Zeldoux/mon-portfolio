@@ -12,7 +12,6 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  
   overflow: hidden; /* Prevents overflow on main page */
   padding: 20px; /* Removes extra padding */
 }
@@ -28,7 +27,7 @@
 
 /* Default Section Container Border (left cut) */
 .section-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -61,7 +60,7 @@
 }
 
 .title-banner::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -81,7 +80,6 @@
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.3));
 }
 
-
 /* Profile Section */
 .profile-section, .Skills-section, .projects-section, .login-section {
   width: 100%;
@@ -99,8 +97,4 @@
 
 .projects-section {
   align-self: center; /* Centers projects section */
-}
-
-.login-section {
-  align-self: flex-end; /* Aligns login section to the right */
-}
+}/*# sourceMappingURL=Layout.css.map */

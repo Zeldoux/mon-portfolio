@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LoginForm from '../components/LoginForm';
 
-import '../style/layout.css';
+import '../style/Layout.css';
 
 const Layout = ({ children }) => {
   const { isLoggedIn, login, logout } = useContext(AuthContext);

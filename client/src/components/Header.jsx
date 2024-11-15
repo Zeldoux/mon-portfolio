@@ -10,9 +10,9 @@ const Header = ({ isLoggedIn, onLoginClick, onLogoutClick }) => (
         <LogoSVG className="header-logo" />
       </div>
       <ul className="nav-links">
-        <li><a href="#profile">Profile</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
+        <li><a href="#profile">Profil</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#projects">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
         {isLoggedIn ? (
           <li><button onClick={onLogoutClick}>Logout</button></li>

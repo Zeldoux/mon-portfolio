@@ -1,0 +1,27 @@
+/* MainPage.css */
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.section-box {
+  position: relative;
+  width: 50%; /* Adjust width as needed */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.connector-top {
+  top: -20px;
+}
+
+.connector-bottom {
+  bottom: -20px;
+}/*# sourceMappingURL=MainPage.css.map */

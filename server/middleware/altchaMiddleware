@@ -1,9 +1,12 @@
 const crypto = require('crypto');
 const querystring = require('querystring');
+const crypto = require('crypto');
+const querystring = require('querystring');
 
 exports.verifyAltchaSolution = async (req, res, next) => {
   const { altchaToken } = req.body;
-
+  console.log('Payload:', payload);
+  console.log('Parsed verificationData:', querystring.parse(verificationData));
   if (!altchaToken) {
     return res.status(400).json({ message: 'ALTCHA token is required.' });
   }
@@ -13,48 +16,58 @@ exports.verifyAltchaSolution = async (req, res, next) => {
     const payload = JSON.parse(Buffer.from(altchaToken, 'base64').toString('utf8'));
     const { verificationData, signature, algorithm, verified } = payload;
 
-    // Check if the verification status is true
+    // Ensure verification is true
     if (!verified) {
       return res.status(400).json({ message: 'ALTCHA verification failed.' });
     }
 
-    // Validate the algorithm
+    // Validate algorithm
     if (algorithm !== 'SHA-256') {
       return res.status(400).json({ message: 'Unsupported algorithm.' });
     }
 
-    // Compute the hash of the verificationData
+    // Hash verificationData (raw)
     const hash = crypto.createHash('sha256').update(verificationData).digest();
 
-    // Compute the HMAC signature
+    // Compute HMAC signature
     const computedSignature = crypto
       .createHmac('sha256', process.env.ALTCHA_API_SECRET)
       .update(hash)
       .digest('hex');
 
-    // Compare the computed signature with the one in the payload
+    // Verify signature
     if (computedSignature !== signature) {
-      console.error('ALTCHA signature mismatch', { verificationData, signature, computedSignature });
+      console.error('ALTCHA signature mismatch:', { verificationData, signature, computedSignature });
       return res.status(400).json({ message: 'Invalid ALTCHA signature.' });
     }
 
-    // Parse and validate verificationData
+    // Parse verificationData to validate fields and classification
     const parsedData = querystring.parse(verificationData);
 
     // Check spam classification
     if (parsedData.classification !== 'GOOD') {
-      console.error('Spam detected', { parsedData });
+      console.error('Spam detected:', { parsedData });
       return res.status(400).json({ message: 'Spam detected.' });
+    }
+
+    // Validate fieldsHash (if applicable)
+    if (parsedData.fields && parsedData.fieldsHash) {
+      const fields = parsedData.fields.split(',');
+      const concatenatedFields = fields.map((field) => req.body[field]).join('\n');
+      const fieldsHash = crypto.createHash('sha256').update(concatenatedFields).digest('hex');
+
+      if (fieldsHash !== parsedData.fieldsHash) {
+        return res.status(400).json({ message: 'Invalid form data.' });
+      }
     }
 
     // Check expiration time
     if (parsedData.expire && parseInt(parsedData.expire, 10) < Date.now() / 1000) {
-      console.error('ALTCHA challenge expired', { parsedData });
+      console.error('ALTCHA challenge expired:', { parsedData });
       return res.status(400).json({ message: 'ALTCHA challenge expired.' });
     }
 
-    // Log successful verification for debugging
-    console.log('ALTCHA verification successful:', { verificationData, computedSignature, parsedData });
+    console.log('ALTCHA verification successful:', { parsedData });
     next();
   } catch (err) {
     console.error('ALTCHA verification error:', err);

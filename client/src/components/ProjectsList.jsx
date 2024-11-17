@@ -8,13 +8,13 @@ import SkillData from '../data/Skills.json';
 function ProjectList({ projects }) {
   const [modalContent, setModalContent] = useState(null);
 
-  // Fonction pour récupérer le logo d'une compétence
+  
   const getSkillLogo = (skillName) => {
     for (const category of SkillData) {
       const skill = category.skills.find((s) => s.name.toLowerCase() === skillName.toLowerCase());
       if (skill) return skill.logo;
     }
-    return null; // Si aucune correspondance n'est trouvée
+    return null; 
   };
 
   const handleCardClick = (project) => {

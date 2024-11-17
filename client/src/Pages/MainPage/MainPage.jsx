@@ -27,6 +27,7 @@ const MainPage = () => {
   return (
       <>
       <article className="typing-container">
+        <h1>
         <TypingEffect
               phrases={[
                 "Bienvenue sur le Portfolio de Yoann Sousa",
@@ -37,6 +38,7 @@ const MainPage = () => {
               deleteSpeed={50}   // delete speed
               pause={500}        // pause between sentences
             />
+        </h1>
       </article>
         
       <article id="profile" className="article-container">

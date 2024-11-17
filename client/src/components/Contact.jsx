@@ -38,19 +38,20 @@ function Contact() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     // Retrieve the current ALTCHA token
     const altchaToken = altchaPayloadRef.current;
-  
+
     if (!altchaToken) {
       setFormStatus('Captcha verification failed. Please complete the CAPTCHA again.');
       setIsSubmitting(false);
       return;
     }
-  
+
     try {
       // Send form data and ALTCHA token to the backend
       const response = await fetch('/api/contact', {
@@ -58,10 +59,10 @@ function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, altchaToken }),
       });
-  
+
       if (!response.ok) {
         let errorMessage;
-  
+
         // Handle different error types (JSON or plain text)
         try {
           const errorData = await response.json();
@@ -69,31 +70,22 @@ function Contact() {
         } catch {
           errorMessage = await response.text();
         }
-  
+
         setFormStatus(`Error: ${errorMessage}`);
         throw new Error(errorMessage);
       }
-  
+
       // Reset form fields after successful submission
       setFormStatus('Message sent successfully!');
       setFormData({ name: '', email: '', message: '' });
+      altchaPayloadRef.current = null; // Clear ALTCHA token after success
     } catch (error) {
       console.error('Error:', error);
       setFormStatus('Failed to send message. Please try again.');
     } finally {
-      // Always reset the ALTCHA token after submission attempt
-      altchaPayloadRef.current = null;
-  
-      // If the widget supports a reset function, call it
-      const widget = document.querySelector('altcha-widget');
-      if (widget && typeof widget.reset === 'function') {
-        widget.reset();
-      }
-  
       setIsSubmitting(false);
     }
   };
-  
 
   return (
     <section className="contact-section section-container">

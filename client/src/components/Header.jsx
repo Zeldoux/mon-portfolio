@@ -1,6 +1,6 @@
 // src/components/Header.js
 import React from 'react';
-
+import '../styles/Header.css';
 import LogoSVG from '../Assets/LogoSVG';
 
 const Header = ({ isLoggedIn, onLoginClick, onLogoutClick }) => (

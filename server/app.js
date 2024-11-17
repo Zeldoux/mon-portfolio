@@ -46,13 +46,15 @@ app.use((req, res, next) => {
 app.use('/api', limiter);
 
 // Routes
-app.use('/api/contact', contactLimiter, contactRoutes);
 app.use('/api/altcha', altchaRoutes);
+app.use('/api/contact', contactLimiter, contactRoutes);
+
 app.use('/api/project', projectRoutes);
 app.use('/api/auth', authRoutes);
 
 // Serve static files for React
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api/')) {
     next();

@@ -13,16 +13,20 @@ function Contact() {
 
   useEffect(() => {
     const widget = document.querySelector('altcha-widget');
+
     if (widget) {
       widget.addEventListener('statechange', (ev) => {
         console.log('ALTCHA state:', ev.detail.state);
+
         if (ev.detail.state === 'verified') {
           console.log('ALTCHA payload:', ev.detail.payload);
+        } else if (ev.detail.state === 'error') {
+          console.error('ALTCHA error:', ev.detail.error);
         }
       });
 
       widget.addEventListener('error', (err) => {
-        console.error('ALTCHA error:', err);
+        console.error('ALTCHA widget error:', err);
       });
     }
   }, []);
@@ -36,33 +40,31 @@ function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const altchaToken = altchaRef.current?.value;
+    const widget = document.querySelector('altcha-widget');
+    const altchaToken = widget?.getAttribute('payload');
 
     if (!altchaToken) {
       setFormStatus('Captcha verification failed.');
-      console.error('No ALTCHA token received.');
       setIsSubmitting(false);
       return;
     }
 
-    console.log('ALTCHA Token:', altchaToken);
-
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, altchaToken }),
       });
 
-      if (!response.ok) throw new Error('Failed to send message');
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
 
       setFormStatus('Message sent successfully!');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
-      console.error('Error submitting form:', error);
       setFormStatus('Failed to send message. Please try again.');
+      console.error('Error:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -108,7 +110,7 @@ function Contact() {
           <altcha-widget
             ref={altchaRef}
             style={{ '--altcha-max-width': '100%' }}
-            challengeurl="/altcha-challenge"
+            challengeurl="/api/altcha/altcha-challenge"
           />
         </fieldset>
         <button type="submit" disabled={isSubmitting}>

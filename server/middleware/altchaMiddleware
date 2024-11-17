@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const querystring = require('querystring');
 
 exports.verifyAltchaSolution = async (req, res, next) => {
   const { altchaToken } = req.body;
@@ -8,27 +9,52 @@ exports.verifyAltchaSolution = async (req, res, next) => {
   }
 
   try {
+    // Decode the ALTCHA token
     const payload = JSON.parse(Buffer.from(altchaToken, 'base64').toString('utf8'));
-
     const { verificationData, signature, algorithm, verified } = payload;
 
+    // Check if the verification status is true
     if (!verified) {
       return res.status(400).json({ message: 'ALTCHA verification failed.' });
     }
 
-    // Optionally validate the signature
+    // Validate the algorithm
+    if (algorithm !== 'SHA-256') {
+      return res.status(400).json({ message: 'Unsupported algorithm.' });
+    }
+
+    // Compute the hash of the verificationData
     const hash = crypto.createHash('sha256').update(verificationData).digest();
+
+    // Compute the HMAC signature
     const computedSignature = crypto
       .createHmac('sha256', process.env.ALTCHA_API_SECRET)
       .update(hash)
       .digest('hex');
 
+    // Compare the computed signature with the one in the payload
     if (computedSignature !== signature) {
       console.error('ALTCHA signature mismatch', { verificationData, signature, computedSignature });
       return res.status(400).json({ message: 'Invalid ALTCHA signature.' });
     }
 
-    console.log('ALTCHA verification successful');
+    // Parse and validate verificationData
+    const parsedData = querystring.parse(verificationData);
+
+    // Check spam classification
+    if (parsedData.classification !== 'GOOD') {
+      console.error('Spam detected', { parsedData });
+      return res.status(400).json({ message: 'Spam detected.' });
+    }
+
+    // Check expiration time
+    if (parsedData.expire && parseInt(parsedData.expire, 10) < Date.now() / 1000) {
+      console.error('ALTCHA challenge expired', { parsedData });
+      return res.status(400).json({ message: 'ALTCHA challenge expired.' });
+    }
+
+    // Log successful verification for debugging
+    console.log('ALTCHA verification successful:', { verificationData, computedSignature, parsedData });
     next();
   } catch (err) {
     console.error('ALTCHA verification error:', err);

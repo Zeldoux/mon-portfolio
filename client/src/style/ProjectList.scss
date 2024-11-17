@@ -1,8 +1,0 @@
-// src/style/project-list.scss
-
-.project-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); // Creates 3 columns of equal width
-    gap: 50px; // Space between grid items
-    justify-items: center; // Centers items in the grid cells
-  }

@@ -1,6 +1,6 @@
 // src/components/Tooltip.jsx
 import React from 'react';
-import '../style/Skills.css'; // Ensure this path is correct
+
 
 function Tooltip({ tooltipData }) {
   if (!tooltipData || !tooltipData.visible) {

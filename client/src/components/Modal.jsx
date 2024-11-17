@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/Modal.css';
+
 
 function Modal({ content, onClose }) {
   if (!content) return null;

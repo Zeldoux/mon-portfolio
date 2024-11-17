@@ -1,5 +1,4 @@
 import React from 'react';
-import '../style/Card.css';
 
 function Card({ project, onClick }) {
   // check imageUrl exist and contain img 

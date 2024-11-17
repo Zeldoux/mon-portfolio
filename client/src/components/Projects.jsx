@@ -4,10 +4,10 @@ import ProjectList from './ProjectsList';
 
 function Projects({ projects }) {
   return (
-    <div className="section-container">
+    <section className="section-container">
       <h2 className="title-banner">Mes Projets</h2>
       <ProjectList projects={projects} />
-    </div>
+    </section>
   );
 }
 

@@ -20,15 +20,15 @@ router.post('/', async (req, res) => {
     port: 465, // Port for SSL
     secure: true, // Use SSL
     auth: {
-      user: process.env.EMAIL_USER, // Your OVH email address
-      pass: process.env.EMAIL_PASS, // Your OVH email password
+      user: process.env.EMAIL_USER, // OVH email address
+      pass: process.env.EMAIL_PASS, // OVH email password
     },
   });
 
   // Set up email data
   let mailOptions = {
-    from: '"Portfolio Contacte" <contacter-moi@ysportfolio.fr>', // Votre adresse e-mail
-    to: 'contacter-moi@ysportfolio.fr', // my email adress
+    from: '"Portfolio Contacte" <contacter-moi@ysportfolio.fr>', 
+    to: 'contacter-moi@ysportfolio.fr', 
     subject: 'Contact Depuis le PortFolio',
     text: `Nom: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
     html: `

@@ -1,12 +1,22 @@
-@import 'variable';
-@import 'mixins';
+@import './abstracts/variable';
+@import './abstracts/mixins';
+@import './abstracts/media';
 
-body {
-  color: $color-black;
+@import './base/reset';
+@import './base/typography';
 
-  .container {
-    @include flex-center;
-    
-    height: 100vh;
-  }
-}
+@import './layout/layout';
+@import './layout/Section';
+@import './layout/Header';
+@import './layout/Footer';
+
+@import './components/Card';
+@import './components/Contact';
+@import './components/Modal';
+@import './components/ProjectList';
+@import './components/Profile';
+@import './components/Skills';
+@import './components/ToolTip';
+@import './components/ErrorPage.scss';
+@import './components/Gallery.scss';
+

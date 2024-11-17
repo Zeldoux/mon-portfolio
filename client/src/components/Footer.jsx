@@ -1,20 +1,20 @@
 // src/components/Footer.js
 import React from 'react';
 import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
-import '../style/Footer.css';
+
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
         <a href="https://www.linkedin.com/in/yoannsousa/" target="_blank" rel="noopener noreferrer">
-          <FaLinkedin /> LinkedIn
+          <FaLinkedin />
         </a>
         <a href="https://github.com/Zeldoux" target="_blank" rel="noopener noreferrer">
-          <FaGithub /> GitHub
+          <FaGithub />
         </a>
         <a href="mailto:contacter-moi@ysportfolio.fr">
-          <FaEnvelope /> contacter-moi@ysportfolio.fr
+          <FaEnvelope />
         </a>
       </div>
     </footer>

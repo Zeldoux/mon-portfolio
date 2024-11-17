@@ -1,6 +1,6 @@
 // src/components/Gallery.js
 import React, { useState } from 'react';
-import '../style/Gallery.css';
+
 
 function Gallery({ images }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -31,11 +31,13 @@ function Gallery({ images }) {
           &#8592; {/* Flèche gauche */}
         </button>
       )}
-      <img
-        src={images[currentImageIndex]}
-        alt={`Présentation du projet ${currentImageIndex + 1}`}
-        className="gallery-image"
-      />
+       <div className="gallery-image-wrapper">
+        <img
+          src={images[currentImageIndex]}
+          alt={`Présentation du projet ${currentImageIndex + 1}`}
+          className="gallery-image"
+        />
+       </div>
       {totalImages > 1 && (
         <button className="arrow right-arrow" onClick={nextImage}>
           &#8594; {/* Flèche droite */}

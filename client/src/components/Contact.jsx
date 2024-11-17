@@ -38,24 +38,11 @@ function Contact() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
   
-    // Reset ALTCHA token for this attempt
-    altchaPayloadRef.current = null;
-    
-  
-    // Reset form fields (optional, based on your UX preference)
-    setFormData({ name: '', email: '', message: '' });
-  
-    const widget = document.querySelector('altcha-widget');
-    if (widget) {
-      widget.reset(); // Reset ALTCHA widget (if supported)
-    }
-  
-    // Retrieve ALTCHA token after resetting
+    // Retrieve the current ALTCHA token
     const altchaToken = altchaPayloadRef.current;
   
     if (!altchaToken) {
@@ -75,6 +62,7 @@ function Contact() {
       if (!response.ok) {
         let errorMessage;
   
+        // Handle different error types (JSON or plain text)
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || 'An unexpected error occurred.';
@@ -86,14 +74,26 @@ function Contact() {
         throw new Error(errorMessage);
       }
   
+      // Reset form fields after successful submission
       setFormStatus('Message sent successfully!');
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       console.error('Error:', error);
       setFormStatus('Failed to send message. Please try again.');
     } finally {
+      // Always reset the ALTCHA token after submission attempt
+      altchaPayloadRef.current = null;
+  
+      // If the widget supports a reset function, call it
+      const widget = document.querySelector('altcha-widget');
+      if (widget && typeof widget.reset === 'function') {
+        widget.reset();
+      }
+  
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <section className="contact-section section-container">

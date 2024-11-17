@@ -42,16 +42,16 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+  
     // Retrieve ALTCHA token from ref
     const altchaToken = altchaPayloadRef.current;
-
+  
     if (!altchaToken) {
       setFormStatus('Captcha verification failed. Please complete the CAPTCHA again.');
       setIsSubmitting(false);
       return;
     }
-
+  
     try {
       // Send form data and ALTCHA token to the backend
       const response = await fetch('/api/contact', {
@@ -59,13 +59,23 @@ function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, altchaToken }),
       });
-
+  
       if (!response.ok) {
-        const errorData = await response.json();
-        setFormStatus(`Failed to send message: ${errorData.message}`);
-        throw new Error(errorData.message || 'Failed to send message.');
+        let errorMessage;
+  
+        // Try to parse the response as JSON
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || 'An unexpected error occurred.';
+        } catch {
+          // If the response is not JSON, use the plain text
+          errorMessage = await response.text();
+        }
+  
+        setFormStatus(`Failed to send message: ${errorMessage}`);
+        throw new Error(errorMessage);
       }
-
+  
       setFormStatus('Message sent successfully!');
       setFormData({ name: '', email: '', message: '' }); // Clear form fields
       altchaPayloadRef.current = null; // Reset ALTCHA token

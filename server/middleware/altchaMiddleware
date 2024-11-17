@@ -43,6 +43,11 @@ exports.verifyAltchaSolution = async (req, res, next) => {
     // Parse verificationData to validate fields and classification
     const parsedData = querystring.parse(verificationData);
 
+    // Allow only "GOOD" classifications, ignoring the `text.SHORT_TEXT` reason
+    if (parsedData.classification !== 'GOOD' && parsedData.reasons.includes('text.SHORT_TEXT')) {
+        parsedData.reasons = parsedData.reasons.filter((reason) => reason !== 'text.SHORT_TEXT');
+    }
+
     // Check spam classification
     if (parsedData.classification !== 'GOOD') {
       console.error('Spam detected:', { parsedData });

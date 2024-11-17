@@ -61,17 +61,25 @@ function Contact() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send message.');
+        const errorData = await response.json();
+        setFormStatus(`Failed to send message: ${errorData.message}`);
+        throw new Error(errorData.message || 'Failed to send message.');
       }
 
       setFormStatus('Message sent successfully!');
       setFormData({ name: '', email: '', message: '' }); // Clear form fields
+      altchaPayloadRef.current = null; // Reset ALTCHA token
     } catch (error) {
       console.error('Error:', error);
       setFormStatus('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({ name: '', email: '', message: '' });
+    altchaPayloadRef.current = null; // Reset ALTCHA token
   };
 
   return (
@@ -120,6 +128,9 @@ function Contact() {
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>
+        <button type="button" onClick={resetForm} disabled={isSubmitting}>
+          Reset Form
+        </button>
       </form>
       {formStatus && <p className="form-status">{formStatus}</p>}
     </section>
@@ -127,11 +138,3 @@ function Contact() {
 }
 
 export default Contact;
-
-
-/*          <altcha-widget
-ref={altchaRef}
-style={{ '--altcha-max-width': '100%' }}
-challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey"
-spamfilter
-/>*/

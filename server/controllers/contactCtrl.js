@@ -1,59 +1,11 @@
-const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
-// Function to verify the ALTCHA payload
-const verifyAltchaPayload = (payload, secretKey) => {
-  const { algorithm, challenge, number, salt, signature } = payload;
-
-  if (algorithm !== 'SHA-256') {
-    console.error('Unsupported algorithm:', algorithm);
-    return false;
-  }
-
-  // Verify the challenge
-  const computedChallenge = crypto
-    .createHash('sha256')
-    .update(`${salt}${number}`)
-    .digest('hex');
-
-  if (challenge !== computedChallenge) {
-    console.error('Invalid challenge');
-    return false;
-  }
-
-  // Verify the signature
-  const computedSignature = crypto
-    .createHmac('sha256', secretKey)
-    .update(challenge)
-    .digest('hex');
-
-  if (signature !== computedSignature) {
-    console.error('Invalid signature');
-    return false;
-  }
-
-  return true;
-};
-
 exports.sendEmail = async (req, res) => {
-  const { name, email, message, altchaToken } = req.body;
-
-  if (!altchaToken) {
-    return res.status(400).json({ message: 'ALTCHA token is missing.' });
-  }
+  const { name, email, message } = req.body;
 
   try {
-    // Decode and verify the payload
-    const payload = JSON.parse(Buffer.from(altchaToken, 'base64').toString('utf-8'));
-    const secretKey = process.env.ALTCHA_API_SECRET; // Ensure this is set in .env
-
-    if (!verifyAltchaPayload(payload, secretKey)) {
-      return res.status(400).json({ message: 'Invalid ALTCHA payload.' });
-    }
-
-    // Send email via nodemailer
     const transporter = nodemailer.createTransport({
-      host: 'ssl0.ovh.net', // OVH SMTP server
+      host: 'ssl0.ovh.net',
       port: 465,
       secure: true,
       auth: {
@@ -72,6 +24,7 @@ exports.sendEmail = async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
 
     res.status(200).json({ message: 'Email sent successfully.' });
   } catch (error) {

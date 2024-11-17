@@ -1,0 +1,37 @@
+const crypto = require('crypto');
+
+exports.verifyAltchaSolution = async (req, res, next) => {
+  const { altchaToken } = req.body;
+
+  if (!altchaToken) {
+    return res.status(400).json({ message: 'ALTCHA token is required.' });
+  }
+
+  try {
+    const payload = JSON.parse(Buffer.from(altchaToken, 'base64').toString('utf8'));
+
+    const { verificationData, signature, algorithm, verified } = payload;
+
+    if (!verified) {
+      return res.status(400).json({ message: 'ALTCHA verification failed.' });
+    }
+
+    // Optionally validate the signature
+    const hash = crypto.createHash('sha256').update(verificationData).digest();
+    const computedSignature = crypto
+      .createHmac('sha256', process.env.ALTCHA_API_SECRET)
+      .update(hash)
+      .digest('hex');
+
+    if (computedSignature !== signature) {
+      console.error('ALTCHA signature mismatch', { verificationData, signature, computedSignature });
+      return res.status(400).json({ message: 'Invalid ALTCHA signature.' });
+    }
+
+    console.log('ALTCHA verification successful');
+    next();
+  } catch (err) {
+    console.error('ALTCHA verification error:', err);
+    return res.status(500).json({ message: 'ALTCHA verification error.', error: err });
+  }
+};

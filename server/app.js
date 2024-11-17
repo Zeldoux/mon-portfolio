@@ -39,10 +39,13 @@ app.use(express.json());
 // Use the CORS middleware if necessary
 // app.use(cors());
 
+// Serve CSS files with the correct MIME type
+app.use('/styles', express.static(path.join(__dirname, 'styles')));
 app.use('/api/', limiter); // Apply rate limiting to API routes only
 app.use('/api/project', projectRoutes); // Project routes
 app.use('/api/auth', authRoutes); // Auth routes
 app.use('/api/contact', contactRoutes);
+
 app.use('/images', express.static(path.join(__dirname, 'images'))); // Static route for image files
 
 // Serve static files for the React application

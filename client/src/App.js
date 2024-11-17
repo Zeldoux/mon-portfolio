@@ -1,5 +1,3 @@
-
-import './style/App.css';
 import AppRouter from './Router/AppRouter';
 
 

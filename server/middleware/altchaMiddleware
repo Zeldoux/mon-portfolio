@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const querystring = require('querystring');
-const crypto = require('crypto');
-const querystring = require('querystring');
+
 
 exports.verifyAltchaSolution = async (req, res, next) => {
   const { altchaToken } = req.body;

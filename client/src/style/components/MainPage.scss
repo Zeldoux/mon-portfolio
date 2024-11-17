@@ -1,34 +1,43 @@
+/* MainPage.scss */
 @import '../abstracts/variable';
 @import '../abstracts/mixins';
 
 .main-page {
-  @include flex-center(column); /* Center content with flex-direction column */
-  gap: 40px;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+    /* Typing effect container */
+  .typing-container {
+    width: 100%; /* Adjust as needed */
+    text-align: center;
+    margin: 20px 0;
+    height: 3rem; /* Fix the height to avoid layout shift */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.typing-container {
-  width: 100%;
-  height: 3rem; /* Fix height to avoid layout shift */
-  @include flex-center(row); /* Center content horizontally and vertically */
-  margin: 20px 0;
-  text-align: center;
-
-  .typing-text {
-    font-size: $font-size-xlarge; /* Use large font size for typing effect */
-    border-right: 2px solid $color-black; /* Cursor effect */
+  .typing-container .typing-text {
+    font-size: 2rem;
+    border-right: 2px solid black; /* Cursor effect */
     white-space: nowrap;
     overflow: hidden;
-    font-family: $font-monospace; /* Use monospace font for typing effect */
     display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
   }
-}
+  
+  .section-box {
+    position: relative;
+    width: 50%; /* Adjust width as needed */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.section-box {
-  position: relative;
-  width: 50%;
-  background-color: $color-white;
-  border: 1px solid $color-gray-light;
-  padding: 20px;
-  z-index: $z-index-header;
-  @include flex-center(column); /* Center content inside the box */
-}
+

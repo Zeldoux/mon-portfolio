@@ -91,12 +91,19 @@
     }
 
     /* Tablet View */
-    @include respond-to(mobile) {
-      font-size: 1.2rem; 
+    @media (max-width: 768px) {
+      font-size: 1.5rem; 
       white-space: normal; 
       border-right: none; 
       text-align: center; 
-      
+    }
+
+    /* Mobile View */
+    @media (max-width: 480px) {
+      font-size: 1.2rem; 
+      white-space: normal; 
+      line-height: 1.4; 
+      border-right: none; /* Remove the cursor effect */
     }
   }
 }

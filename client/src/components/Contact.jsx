@@ -43,7 +43,19 @@ function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
   
-    // Retrieve ALTCHA token from ref
+    // Reset ALTCHA token for this attempt
+    altchaPayloadRef.current = null;
+    
+  
+    // Reset form fields (optional, based on your UX preference)
+    setFormData({ name: '', email: '', message: '' });
+  
+    const widget = document.querySelector('altcha-widget');
+    if (widget) {
+      widget.reset(); // Reset ALTCHA widget (if supported)
+    }
+  
+    // Retrieve ALTCHA token after resetting
     const altchaToken = altchaPayloadRef.current;
   
     if (!altchaToken) {
@@ -63,33 +75,24 @@ function Contact() {
       if (!response.ok) {
         let errorMessage;
   
-        // Try to parse the response as JSON
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || 'An unexpected error occurred.';
         } catch {
-          // If the response is not JSON, use the plain text
           errorMessage = await response.text();
         }
   
-        setFormStatus(`Failed to send message: ${errorMessage}`);
+        setFormStatus(`Error: ${errorMessage}`);
         throw new Error(errorMessage);
       }
   
       setFormStatus('Message sent successfully!');
-      setFormData({ name: '', email: '', message: '' }); // Clear form fields
-      altchaPayloadRef.current = null; // Reset ALTCHA token
     } catch (error) {
       console.error('Error:', error);
       setFormStatus('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const resetForm = () => {
-    setFormData({ name: '', email: '', message: '' });
-    altchaPayloadRef.current = null; // Reset ALTCHA token
   };
 
   return (
@@ -137,9 +140,6 @@ function Contact() {
         </fieldset>
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Sending...' : 'Send Message'}
-        </button>
-        <button type="button" onClick={resetForm} disabled={isSubmitting}>
-          Reset Form
         </button>
       </form>
       {formStatus && <p className="form-status">{formStatus}</p>}

@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 exports.sendEmail = async (req, res) => {
   const { name, email, message } = req.body;
-
+  console.log('Request body:', req.body);
   try {
     const transporter = nodemailer.createTransport({
       host: 'ssl0.ovh.net',
@@ -22,6 +22,14 @@ exports.sendEmail = async (req, res) => {
       html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
       replyTo: email,
     };
+
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error('SMTP connection error:', error);
+      } else {
+        console.log('SMTP server is ready to accept messages');
+      }
+    });
 
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');

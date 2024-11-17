@@ -4,8 +4,8 @@ const querystring = require('querystring');
 
 exports.verifyAltchaSolution = async (req, res, next) => {
   const { altchaToken } = req.body;
-  console.log('Payload:', payload);
-  console.log('Parsed verificationData:', querystring.parse(verificationData));
+  
+  
   if (!altchaToken) {
     return res.status(400).json({ message: 'ALTCHA token is required.' });
   }

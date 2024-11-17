@@ -110,7 +110,7 @@ function Contact() {
           <altcha-widget
             ref={altchaRef}
             style={{ '--altcha-max-width': '100%' }}
-            challengeurl="https://api.altcha.io/v1/challenge?apiKey=ckey_01598c0f05be4c592ad4d425f0d8"
+            challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01598c0f05be4c592ad4d425f0d8"
             spamfilter
           />
         </fieldset>

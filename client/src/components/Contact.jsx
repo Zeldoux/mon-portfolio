@@ -39,27 +39,27 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+  
     const widget = document.querySelector('altcha-widget');
-    const altchaToken = widget?.getAttribute('payload');
-
+    const altchaToken = widget?.getAttribute('payload'); // Ensure the widget emits this
+  
     if (!altchaToken) {
       setFormStatus('Captcha verification failed.');
       setIsSubmitting(false);
       return;
     }
-
+  
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, altchaToken }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to send message');
       }
-
+  
       setFormStatus('Message sent successfully!');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
@@ -110,7 +110,8 @@ function Contact() {
           <altcha-widget
             ref={altchaRef}
             style={{ '--altcha-max-width': '100%' }}
-            challengeurl="/api/altcha/altcha-challenge"
+            challengeurl="https://api.altcha.io/v1/challenge?apiKey=ckey_01598c0f05be4c592ad4d425f0d8"
+            spamfilter
           />
         </fieldset>
         <button type="submit" disabled={isSubmitting}>
@@ -123,3 +124,10 @@ function Contact() {
 }
 
 export default Contact;
+
+/*          <altcha-widget
+ref={altchaRef}
+style={{ '--altcha-max-width': '100%' }}
+challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey"
+spamfilter
+/>*/

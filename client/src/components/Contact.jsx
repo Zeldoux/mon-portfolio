@@ -1,7 +1,5 @@
-// src/components/Contact.js
-
-import React, { useState } from 'react';
-
+import React, { useState, useRef } from 'react';
+import 'altcha';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -9,53 +7,62 @@ function Contact() {
     email: '',
     message: '',
   });
-
   const [formStatus, setFormStatus] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const altchaRef = useRef();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); // submit start
+    setIsSubmitting(true);
 
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        setIsSubmitting(false); // submit end
-        if (!response.ok) throw new Error('Failed to send message');
-        return response.json();
-      })
-      .then(() => {
-        setFormStatus('Message envoyé avec succès !');
-        setFormData({ name: '', email: '', message: '' });
-      })
-      .catch(() => {
-        setFormStatus('Erreur lors de l\'envoi du message. Veuillez réessayer.');
+    // Get ALTCHA token
+    const altchaToken = altchaRef.current?.value;
+
+    if (!altchaToken) {
+      setFormStatus('Captcha verification failed.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, altchaToken }),
       });
+
+      if (!response.ok) throw new Error('Failed to send message');
+
+      setFormStatus('Message sent successfully!');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error:', error);
+      setFormStatus('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section className="contact-section section-container">
-      <h2 className="title-banner">Me Contacter</h2>
+      <h2 className="title-banner">Contact Me</h2>
       <form onSubmit={handleSubmit} className="contact-form">
         <label>
-          Nom
+          Name
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            disabled={isSubmitting} // disable while submit is going on 
+            disabled={isSubmitting}
           />
         </label>
         <label>
@@ -79,8 +86,15 @@ function Contact() {
             disabled={isSubmitting}
           />
         </label>
+        <fieldset>
+          <altcha-widget
+            ref={altchaRef}
+            style={{ '--altcha-max-width': '100%' }}
+            challengeurl="/api/altcha-challenge"
+          ></altcha-widget>
+        </fieldset>
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Envoi en cours...' : 'Envoyer un Message'}
+          {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>
       </form>
       {formStatus && <p className="form-status">{formStatus}</p>}

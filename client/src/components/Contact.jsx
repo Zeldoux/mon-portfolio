@@ -38,20 +38,19 @@ function Contact() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Retrieve the current ALTCHA token
+  
+    // Retrieve ALTCHA token from ref
     const altchaToken = altchaPayloadRef.current;
-
+  
     if (!altchaToken) {
       setFormStatus('Captcha verification failed. Please complete the CAPTCHA again.');
       setIsSubmitting(false);
       return;
     }
-
+  
     try {
       // Send form data and ALTCHA token to the backend
       const response = await fetch('/api/contact', {
@@ -59,32 +58,42 @@ function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, altchaToken }),
       });
-
+  
       if (!response.ok) {
         let errorMessage;
-
-        // Handle different error types (JSON or plain text)
+  
+        // Try to parse the response as JSON
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || 'An unexpected error occurred.';
         } catch {
+          // If the response is not JSON, use the plain text
           errorMessage = await response.text();
         }
-
+  
+        // Set the error message in formStatus
         setFormStatus(`Error: ${errorMessage}`);
+  
+        // Reset the form data
+        setFormData({ name: '', email: '', message: '' });
+  
         throw new Error(errorMessage);
       }
-
-      // Reset form fields after successful submission
+  
       setFormStatus('Message sent successfully!');
-      setFormData({ name: '', email: '', message: '' });
-      altchaPayloadRef.current = null; // Clear ALTCHA token after success
+      setFormData({ name: '', email: '', message: '' }); // Clear form fields
+      altchaPayloadRef.current = null; // Reset ALTCHA token
     } catch (error) {
       console.error('Error:', error);
-      setFormStatus('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
+  };
+  
+
+  const resetForm = () => {
+    setFormData({ name: '', email: '', message: '' });
+    altchaPayloadRef.current = null; // Reset ALTCHA token
   };
 
   return (

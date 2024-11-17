@@ -9,7 +9,7 @@ function Contact() {
   });
   const [formStatus, setFormStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const altchaRef = useRef();
+  const altchaPayloadRef = useRef(null);
 
   useEffect(() => {
     const widget = document.querySelector('altcha-widget');
@@ -20,13 +20,16 @@ function Contact() {
 
         if (ev.detail.state === 'verified') {
           console.log('ALTCHA payload:', ev.detail.payload);
+          altchaPayloadRef.current = ev.detail.payload; // Save verified payload
         } else if (ev.detail.state === 'error') {
           console.error('ALTCHA error:', ev.detail.error);
+          altchaPayloadRef.current = null; // Clear payload if error occurs
         }
       });
 
       widget.addEventListener('error', (err) => {
         console.error('ALTCHA widget error:', err);
+        altchaPayloadRef.current = null;
       });
     }
   }, []);
@@ -39,32 +42,33 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
-    const widget = document.querySelector('altcha-widget');
-    const altchaToken = widget?.getAttribute('payload'); // Ensure the widget emits this
-  
+
+    // Retrieve ALTCHA token from ref
+    const altchaToken = altchaPayloadRef.current;
+
     if (!altchaToken) {
-      setFormStatus('Captcha verification failed.');
+      setFormStatus('Captcha verification failed. Please complete the CAPTCHA again.');
       setIsSubmitting(false);
       return;
     }
-  
+
     try {
+      // Send form data and ALTCHA token to the backend
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, altchaToken }),
       });
-  
+
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        throw new Error('Failed to send message.');
       }
-  
+
       setFormStatus('Message sent successfully!');
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', message: '' }); // Clear form fields
     } catch (error) {
-      setFormStatus('Failed to send message. Please try again.');
       console.error('Error:', error);
+      setFormStatus('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -108,7 +112,6 @@ function Contact() {
         </label>
         <fieldset>
           <altcha-widget
-            ref={altchaRef}
             style={{ '--altcha-max-width': '100%' }}
             challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01598c0f05be4c592ad4d425f0d8"
             spamfilter
@@ -124,6 +127,7 @@ function Contact() {
 }
 
 export default Contact;
+
 
 /*          <altcha-widget
 ref={altchaRef}

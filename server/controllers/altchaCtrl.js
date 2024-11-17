@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 exports.getChallenge = async (req, res) => {

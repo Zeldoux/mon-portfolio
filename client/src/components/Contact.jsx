@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import 'altcha';
 
 function Contact() {
@@ -11,6 +11,22 @@ function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const altchaRef = useRef();
 
+  useEffect(() => {
+    const widget = document.querySelector('altcha-widget');
+    if (widget) {
+      widget.addEventListener('statechange', (ev) => {
+        console.log('ALTCHA state:', ev.detail.state);
+        if (ev.detail.state === 'verified') {
+          console.log('ALTCHA payload:', ev.detail.payload);
+        }
+      });
+
+      widget.addEventListener('error', (err) => {
+        console.error('ALTCHA error:', err);
+      });
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -20,14 +36,16 @@ function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Get ALTCHA token
     const altchaToken = altchaRef.current?.value;
 
     if (!altchaToken) {
       setFormStatus('Captcha verification failed.');
+      console.error('No ALTCHA token received.');
       setIsSubmitting(false);
       return;
     }
+
+    console.log('ALTCHA Token:', altchaToken);
 
     try {
       const response = await fetch('/api/contact', {
@@ -43,7 +61,7 @@ function Contact() {
       setFormStatus('Message sent successfully!');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error submitting form:', error);
       setFormStatus('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -90,8 +108,8 @@ function Contact() {
           <altcha-widget
             ref={altchaRef}
             style={{ '--altcha-max-width': '100%' }}
-            challengeurl="/api/altcha-challenge"
-          ></altcha-widget>
+            challengeurl="/altcha-challenge"
+          />
         </fieldset>
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Sending...' : 'Send Message'}

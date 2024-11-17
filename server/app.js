@@ -1,64 +1,64 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const cors = require('cors');
-
-const contactRoutes = require('./routes/contactRoutes');
-const authRoutes = require('./routes/authRoutes');
-const projectRoutes = require('./routes/projectRoutes');
+const cors = require('cors');
 const path = require('path');
-
 const rateLimit = require('express-rate-limit');
 
+const contactRoutes = require('./routes/contactRoutes');
+const altchaRoutes = require('./routes/altchaRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const authRoutes = require('./routes/authRoutes');
+
+require('dotenv').config();
+
+const app = express();
+
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 60, // Limit each IP to 60 requests per windowMs
+  windowMs: 1 * 60 * 1000,
+  max: 60,
   message: 'Too many requests from this IP, please try again later.',
-  keyGenerator: (req) => {
-    // Use req.ip to safely extract the client IP
-    return req.ip;
-  },
-});
-const contactLimiter = rateLimit({
-  windowMs: 24 * 60 * 60 * 1000, // 24 hours
-  max: 3, // Limit each IP to 3 requests per day
-  message: 'You have reached the daily limit for sending messages. Please try again tomorrow.',
   keyGenerator: (req) => req.ip,
 });
 
-require('dotenv').config();
+const contactLimiter = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: 3,
+  message: 'You have reached the daily limit for sending messages. Please try again tomorrow.',
+  keyGenerator: (req) => req.ip,
+});
 
 mongoose
   .connect(process.env.MONGODB_URI, {})
   .then(() => console.log('Connected to MongoDB successfully!'))
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
-const app = express();
-
-// Fix for the X-Forwarded-For error
 app.set('trust proxy', true);
 
-app.use(limiter);
-
-// Middleware and API routes
+app.use(cors());
 app.use(express.json());
 
-// Use the CORS middleware if necessary
-// app.use(cors());
+app.use((req, res, next) => {
+  console.log(`[REQUEST] ${req.method} ${req.url}`);
+  next();
+});
 
+// Apply rate limiting to all API routes
+app.use('/api', limiter);
 
-app.use('/api/', limiter); // Apply rate limiting to API routes only
-app.use('/api/project', projectRoutes); // Project routes
-app.use('/api/auth', authRoutes); // Auth routes
-app.use('/api/contact',contactLimiter, contactRoutes);
+// Routes
+app.use('/api/contact', contactLimiter, contactRoutes);
+app.use('/api/altcha', altchaRoutes);
+app.use('/api/project', projectRoutes);
+app.use('/api/auth', authRoutes);
 
-app.use('/images', express.static(path.join(__dirname, 'images'))); // Static route for image files
-
-// Serve static files for the React application
+// Serve static files for React
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-
-// Handle unknown routes for React Router
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    next();
+  } else {
+    res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+  }
 });
 
 module.exports = app;

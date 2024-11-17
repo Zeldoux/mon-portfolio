@@ -3,11 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" /> <!-- Change to your brand color -->
+    <meta name="theme-color" content="#000000" /> 
 
+    <!-- Icons -->
+    <link rel="icon" href="https://res.cloudinary.com/zeldoux/image/upload/v1731059059/logo_1_gp3bhy.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+     
+ 
     <!-- Page Title and Description -->
     <title>Portfollio de Yoann Sousa</title>
-    <meta name="description" content="A showcase of my projects, skills, and experience in a portfolio representing me Yoann Sousa." />
+    <meta name="description" content="une démonstration de mes coméptences me représentant moi Yoann Sousa." />
 
     <!-- Favicon and Apple Touch Icon -->
     <link rel="icon" href="https://res.cloudinary.com/zeldoux/image/upload/v1731059059/logo_1_gp3bhy.svg" />
@@ -17,7 +24,7 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <!-- Open Graph Tags for Social Media Sharing -->
-    <meta property="og:title" content="My Portfolio" />
+    <meta property="og:title" content="Mon portfolio" />
     <meta property="og:description" content="A showcase of my projects, skills, and experience." />
     <meta property="og:image" content="https://res.cloudinary.com/zeldoux/image/upload/v1731059059/logo_1_gp3bhy.svg" />
     <meta property="og:url" content="https://yourwebsite.com" />
@@ -25,13 +32,30 @@
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="My Portfolio" />
+    <meta name="twitter:title" content="Mon portfolio" />
     <meta name="twitter:description" content="A showcase of my projects, skills, and experience." />
     <meta name="twitter:image" content="https://res.cloudinary.com/zeldoux/image/upload/v1731059059/logo_1_gp3bhy.svg" />
+
+     <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Yoann Sousa",
+        "jobTitle": "Web Developer",
+        "url": "https://ysportfolio.fr",
+        "image": "https://res.cloudinary.com/zeldoux/image/upload/v1731059059/logo_1_gp3bhy.svg",
+        "sameAs": [
+          "https://github.com/zeldoux",
+          "https://linkedin.com/in/yoannsousa"
+        ]
+      }
+    </script>
+
   </head>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root" aria-label="Main application content"></div>
   </body>
 </html>

@@ -1,9 +1,13 @@
 @import './abstracts/variable';
 @import './abstracts/mixins';
-@import './abstracts/media';
 
+@import './base/global';
 @import './base/reset';
 @import './base/typography';
+
+@import './abstracts/media';
+
+
 
 @import './components/Card';
 @import './components/Contact';

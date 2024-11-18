@@ -1,33 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
-}
-
 html {
   font-size: 100%; /* Default is 16px (1rem) */
   scroll-behavior: smooth;
 }
 
 body {
+  display: none;
   font-family: "Inter", sans-serif;
   color: #ffffff;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body.loaded {
+  display: block;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -49,6 +36,14 @@ p {
     font-size: 85%; /* Further scales down for very small devices */
   }
 }
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 .card {
   width: 100%;
   display: flex;

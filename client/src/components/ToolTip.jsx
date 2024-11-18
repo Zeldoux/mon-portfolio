@@ -1,7 +1,6 @@
 // src/components/Tooltip.jsx
 import React from 'react';
 
-
 function Tooltip({ tooltipData }) {
   if (!tooltipData || !tooltipData.visible) {
     return null;

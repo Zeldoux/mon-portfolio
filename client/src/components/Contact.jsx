@@ -46,7 +46,7 @@ function Contact() {
     const altchaToken = altchaPayloadRef.current;
   
     if (!altchaToken) {
-      setFormStatus('Captcha verification failed. Please complete the CAPTCHA again.');
+      setFormStatus('Captcha verification échoué. complété le CAPTCHA a nouveau.');
       setIsSubmitting(false);
       return;
     }
@@ -65,7 +65,7 @@ function Contact() {
         // Try to parse the response as JSON
         try {
           const errorData = await response.json();
-          errorMessage = errorData.message || 'An unexpected error occurred.';
+          errorMessage = errorData.message || 'Une erreur est survenue .';
         } catch {
           // If the response is not JSON, use the plain text
           errorMessage = await response.text();
@@ -80,7 +80,7 @@ function Contact() {
         throw new Error(errorMessage);
       }
   
-      setFormStatus('Message sent successfully!');
+      setFormStatus('Message Envoyer avec Succes !');
       setFormData({ name: '', email: '', message: '' }); // Clear form fields
       altchaPayloadRef.current = null; // Reset ALTCHA token
     } catch (error) {
@@ -89,19 +89,13 @@ function Contact() {
       setIsSubmitting(false);
     }
   };
-  
-
-  const resetForm = () => {
-    setFormData({ name: '', email: '', message: '' });
-    altchaPayloadRef.current = null; // Reset ALTCHA token
-  };
 
   return (
     <section className="contact-section section-container">
-      <h2 className="title-banner">Contact Me</h2>
+      <h2 className="title-banner">Me Contacter</h2>
       <form onSubmit={handleSubmit} className="contact-form">
         <label>
-          Name
+          Nom
           <input
             type="text"
             name="name"
@@ -134,13 +128,14 @@ function Contact() {
         </label>
         <fieldset>
           <altcha-widget
+            
             style={{ '--altcha-max-width': '100%' }}
             challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01598c0f05be4c592ad4d425f0d8"
             spamfilter
           />
         </fieldset>
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? 'en cours d envoi...' : 'Envoyer'}
         </button>
       </form>
       {formStatus && <p className="form-status">{formStatus}</p>}

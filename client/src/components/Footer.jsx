@@ -16,7 +16,6 @@ const Footer = () => {
         <a href="mailto:contacter-moi@ysportfolio.fr" aria-label="Envoyer un email a Yoann Sousa">
           <FaEnvelope />
         </a>
-        <a href="https://altcha.org">Protected by ALTCHA</a>
       </div>
     </footer>
   );

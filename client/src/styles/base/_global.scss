@@ -4,17 +4,14 @@ html {
   }
 
 body {
-    display: none;
     font-family: $font-primary;
-    color: $color-white;
+    color: $color-black;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
-body.loaded{
-  display:block;
-}
+
   
   h1, h2, h3, h4, h5, h6 {
     font-weight: $font-weight-bold;
@@ -24,7 +21,7 @@ body.loaded{
     font-weight: $font-weight-normal;
     line-height: 1.6;
   }
-
+  
   
   @media (max-width: 768px) {
     html {

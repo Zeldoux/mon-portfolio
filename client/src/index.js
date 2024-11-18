@@ -7,10 +7,6 @@ import './styles/main.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-window.addEventListener('load', () => {
-  document.body.classList.add('loaded'); // Afficher le contenu après le chargement
-});
-
 root.render(
 
   <React.StrictMode>

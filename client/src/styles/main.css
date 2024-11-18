@@ -1,20 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 html {
   font-size: 100%; /* Default is 16px (1rem) */
   scroll-behavior: smooth;
 }
 
 body {
-  display: none;
   font-family: "Inter", sans-serif;
-  color: #ffffff;
+  color: #000000;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-body.loaded {
-  display: block;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -42,6 +36,39 @@ p {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900; /* Supports weights from Thin (100) to Black (900) */
+  font-display: swap;
+  src: url("../Assets/fonts/Inter-VariableFont.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 100 900; /* Supports weights from Thin (100) to Black (900) */
+  font-display: swap;
+  src: url("../Assets/fonts/RobotoMono-VariableFont.ttf") format("truetype");
+}
+:root altcha-widget {
+  --altcha-border-width: 0px; /* Remove the border width */
+  --altcha-color-border: transparent; /* Make the border transparent */
+}
+:root altcha-widget::part(logo) {
+  filter: brightness(0); /* Turn the logo to black */
+}
+:root altcha-widget::part(footer) {
+  color: #000000; /* Text color in the footer */
+  background-color: #000000; /* Footer background */
+  border: none; /* Remove any footer-specific borders */
+}
+:root fieldset {
+  border: none; /* Remove the border of the fieldset */
+}
+:root .altcha.svelte-ddsc3z {
+  border: none !important; /* Ensure border is removed */
 }
 
 .card {

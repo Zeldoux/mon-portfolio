@@ -44,7 +44,7 @@ exports.verifyAltchaSolution = async (req, res, next) => {
     const parsedData = querystring.parse(verificationData);
 
     // Check spam score
-    if (parsedData.score > 3 ) {
+    if (parsedData.score < 3 ) {
       console.error('Spam detected:', { parsedData });
       return res.status(400).json({ message: 'Spam detected.' });
     }

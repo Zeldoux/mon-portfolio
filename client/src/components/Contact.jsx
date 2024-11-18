@@ -131,7 +131,7 @@ function Contact() {
             
             style={{ '--altcha-max-width': '100%' }}
             challengeurl="https://eu.altcha.org/api/v1/challenge?apiKey=ckey_01598c0f05be4c592ad4d425f0d8"
-            spamfilter='{"disableRules": ["text.UNEXPECTED_LANGUAGE", "email.FREE_PROVIDER", "text.SHORT_TEXT"]}'
+            spamfilter="ipAddress"
           />
         </fieldset>
         <button type="submit" disabled={isSubmitting}>

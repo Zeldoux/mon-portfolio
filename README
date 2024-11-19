@@ -1,60 +1,116 @@
 Mon Portfolio
 
-Un site portfolio dynamique construit avec un frontend React et un backend Node.js/Express, pensé pour un déploiement sur Render.
-
+Un portfolio moderne et dynamique construit avec un frontend React et un backend Node.js/Express, conçu pour être déployé sur Render en tant qu'application monolithique ou hébergée séparément.
 Architecture du Projet
 
-Le projet se compose de trois parties :
+Le projet est organisé en trois parties principales :
 
-    Root : configuration générale pour le déploiement sur Render.
-    Client : frontend en React, situé dans client/.
-    Server : backend en Node.js/Express, situé dans server/.
+    Root : Configuration globale pour le déploiement, incluant les scripts de démarrage et de build.
+    Client : Frontend construit avec React, situé dans le répertoire client/.
+    Server : Backend basé sur Node.js et Express, situé dans le répertoire server/.
 
 Déploiement sur Render
 
-Le projet est configuré pour fonctionner sur Render en tant qu'application monolithique. Le backend sert les fichiers statiques du frontend construits dans client/build.
+L'application est configurée pour un déploiement monolithique où le backend sert les fichiers statiques du frontend. Voici les directives utilisées sur Render :
 Directives Render
-
-    Root Directory : /server
-    Build Command : npm install && npm run heroku-postbuild
-    Start Command : npm start
-
+Paramètre	Valeur
+Root Directory	/server
+Build Command	npm install && npm run heroku-postbuild
+Start Command	npm start
 Explication des Commandes
 
-    Build Command (npm install && npm run heroku-postbuild) : Installe les dépendances à la racine, puis exécute heroku-postbuild pour installer les dépendances backend et construire le frontend.
-    Start Command (npm start) : Démarre le serveur backend, qui sert également les fichiers construits du frontend.
+    Build Command :
+        Installe toutes les dépendances nécessaires.
+        Exécute heroku-postbuild, qui installe les dépendances backend et construit le frontend dans client/build.
 
-Scripts dans package.json
+    Start Command :
+        Démarre le backend, qui sert également les fichiers construits du frontend.
 
-Principaux scripts utilisés pour le développement et le déploiement :
+Scripts Disponibles
 
-    start : Lance simultanément le frontend et le backend pour le développement local.
-    server : Démarre uniquement le backend avec nodemon.
-    client : Démarre uniquement le frontend en mode développement.
-    build : Construit le frontend dans client/build.
-    heroku-postbuild : Installe les dépendances backend et construit le frontend pour le déploiement.
-
+Les principaux scripts définis dans le fichier package.json facilitent le développement et le déploiement :
+Script	Description
+npm start	Lance simultanément le frontend et le backend en mode local.
+npm run server	Lance uniquement le backend avec nodemon pour le développement.
+npm run client	Démarre uniquement le frontend en mode développement.
+npm run build	Construit le frontend dans client/build pour le déploiement.
+heroku-postbuild	Installe les dépendances backend et construit le frontend pour la production.
 Démarrage en Local
 
-Pour exécuter le projet localement :
+Pour exécuter le projet localement, suivez ces étapes :
 
-    Clonez le dépôt.
-    Installez les dépendances avec npm install.
-    Utilisez npm start pour lancer le frontend et le backend en mode développement.
+    Cloner le dépôt :
 
-Le backend est accessible par défaut sur le port 3000, et le frontend via un proxy configuré.
+git clone <URL-du-dépôt>
+cd <répertoire-du-projet>
+
+Installer les dépendances :
+
+npm install
+
+Créer un fichier .env dans le répertoire server/ avec les variables nécessaires :
+
+MONGODB_URI=your-mongodb-uri
+JWT_SECRET=your-jwt-secret
+EMAIL_USER=your-email-user
+EMAIL_PASS=your-email-password
+ALTCHA_API_SECRET=your-altcha-secret
+
+Lancer le projet en mode développement :
+
+    npm start
+
+        Le frontend sera accessible sur http://localhost:3000.
+        Le backend répondra sur le même port grâce à un proxy configuré.
+
 Détails du Serveur Express
+Fichiers Statistiques
 
-Dans server/server.js, le backend utilise express.static pour servir le frontend :
+Le backend est configuré pour servir les fichiers construits du frontend depuis client/build :
 
-// Servir les fichiers statiques de l'application React
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+Gestion des Routes
+
+Pour gérer les routes non reconnues côté backend, le serveur redirige vers l'application React :
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 Séparation Frontend et Backend pour Hébergement Indépendant
 
-Pour héberger le frontend et le backend séparément :
+Si vous souhaitez déployer le frontend et le backend séparément :
 
-    Backend : Supprimez ou commentez express.static dans le backend pour ne plus servir le frontend. Le backend sera alors une API indépendante.
-    Frontend : Hébergez le frontend sur un service comme Netlify ou Vercel, et configurez-le pour envoyer les requêtes API au backend (en utilisant un proxy ou une URL d’API dans un fichier d’environnement).
+    Backend :
+        Commentez ou supprimez cette ligne dans le fichier server/app.js :
 
-Cela permet de déployer et mettre à jour chaque partie indépendamment.
+        app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+    Frontend :
+        Hébergez le frontend sur une plateforme comme Netlify ou Vercel.
+        Configurez une URL d'API ou un proxy pour pointer vers le backend.
+
+Cela permet de déployer, maintenir et mettre à jour chaque partie indépendamment.
+Fonctionnalités Clés
+
+    Authentification Sécurisée :
+        Utilisation de JWT pour gérer les tokens.
+        Hashing sécurisé des mots de passe avec bcrypt.
+
+    Gestion des Projets :
+        CRUD complet (ajout, modification, suppression et récupération des projets).
+        Récupération dynamique des projets depuis MongoDB.
+
+    Formulaire de Contact :
+        Sécurisé avec ALTCHA Captcha pour éviter les abus.
+        Envoi d'emails via nodemailer et SMTP.
+
+    Sécurisation et Performance :
+        Limitation des requêtes avec express-rate-limit.
+        Gestion des CORS pour des requêtes cross-origin (si besoin).
+
+Auteur
+
+Créé par Yoann Sousa.
+Pour toute question ou suggestion, contactez-moi à : contacter-moi@ysportfolio.fr

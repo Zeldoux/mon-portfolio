@@ -1,9 +1,13 @@
+// Importing Nodemailer for sending emails
 const nodemailer = require('nodemailer');
 
+// Controller for sending emails
 exports.sendEmail = async (req, res) => {
   const { name, email, message } = req.body;
   console.log('Request body:', req.body);
+
   try {
+    // Configure SMTP transporter
     const transporter = nodemailer.createTransport({
       host: 'ssl0.ovh.net',
       port: 465,
@@ -14,6 +18,7 @@ exports.sendEmail = async (req, res) => {
       },
     });
 
+    // Define email options
     const mailOptions = {
       from: '"Portfolio Contact" <contacter-moi@ysportfolio.fr>',
       to: 'contacter-moi@ysportfolio.fr',
@@ -23,6 +28,7 @@ exports.sendEmail = async (req, res) => {
       replyTo: email,
     };
 
+    // Verify SMTP configuration
     transporter.verify((error, success) => {
       if (error) {
         console.error('SMTP connection error:', error);
@@ -31,6 +37,7 @@ exports.sendEmail = async (req, res) => {
       }
     });
 
+    // Send the email
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');
 

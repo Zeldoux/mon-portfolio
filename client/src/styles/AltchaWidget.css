@@ -1,0 +1,18 @@
+:root altcha-widget {
+  --altcha-border-width: 0px; /* Remove the border width */
+  --altcha-color-border: transparent; /* Make the border transparent */
+}
+:root altcha-widget::part(logo) {
+  filter: brightness(0); /* Turn the logo to black */
+}
+:root altcha-widget::part(footer) {
+  color: #000000;
+  background-color: #000000;
+  border: none;
+}
+:root fieldset {
+  border: none; /* Remove the border of the fieldset */
+}
+:root .altcha.svelte-ddsc3z {
+  border: none;
+}/*# sourceMappingURL=AltchaWidget.css.map */

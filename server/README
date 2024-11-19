@@ -1,69 +1,139 @@
+Backend du Portfolio 
+
+Ce répertoire contient le backend de l'application portfolio, construit avec Node.js et Express. Il gère les requêtes API, l'authentification, la gestion des projets, et l'envoi de messages via le formulaire de contact sécurisé.
 Principales Dépendances
 
-Le backend utilise les bibliothèques suivantes :
+Le backend s'appuie sur les bibliothèques suivantes :
 
-    express : Framework Node.js pour gérer les routes et les middlewares.
-    mongoose : Bibliothèque pour connecter et interagir avec MongoDB.
-    cors : Middleware pour permettre les requêtes cross-origin (essentiel pour le frontend si les deux sont hébergés séparément).
-    dotenv : Permet de charger des variables d'environnement depuis un fichier .env pour des configurations sécurisées.
-    jsonwebtoken : Utilisé pour créer et vérifier les tokens d'authentification des utilisateurs.
-    bcrypt : Bibliothèque pour hasher les mots de passe de manière sécurisée.
-    path : Utilisé pour gérer les chemins de fichiers pour servir le frontend statique et les images.
+    express : Framework pour gérer les routes et middlewares.
+    mongoose : Gestion de la base de données MongoDB.
+    dotenv : Chargement des variables d'environnement depuis un fichier .env.
+    jsonwebtoken : Création et vérification des tokens pour l'authentification.
+    bcrypt : Hashing sécurisé des mots de passe.
+    nodemailer : Envoi d'emails via SMTP.
+    express-rate-limit : Protection contre les abus en limitant les requêtes.
+    path : Gestion des chemins pour servir les fichiers statiques.
+
+Structure du Projet
+
+Voici une vue d'ensemble des fonctionnalités du backend :
+
+    Authentification : Routes sécurisées pour l'inscription et la connexion des utilisateurs.
+    Gestion des Projets :
+        Ajout, modification et suppression de projets.
+        Récupération de la liste des projets ou d'un projet spécifique.
+    Formulaire de Contact :
+        Vérification via ALTCHA Captcha.
+        Envoi d'emails sécurisés.
+    Sécurisation :
+        Limitation des requêtes avec express-rate-limit.
+        Validation et signature des tokens JWT.
+        Protection anti-spam grâce à ALTCHA.
 
 Scripts Disponibles
 
-Les scripts principaux sont définis dans le package.json pour faciliter le développement et le déploiement :
-
-    npm start : Démarre le serveur en production avec node server.js.
-    npm run dev : Démarre le serveur en mode développement avec nodemon, pour un rechargement automatique à chaque modification du code.
-    heroku-postbuild : Exécute les commandes nécessaires pour installer les dépendances du frontend et le construire dans client/build, afin que le serveur puisse le servir en production.
-
-Structure du Serveur
+Voici les scripts principaux pour le développement et le déploiement :
+Script	Description
+npm start	Démarre le serveur en production avec Node.js.
+npm run dev	Lance le serveur en mode développement avec rechargement automatique (nodemon).
+heroku-postbuild	Installe les dépendances backend et construit le frontend dans client/build.
 Connexion à MongoDB
 
-Le serveur se connecte à MongoDB en utilisant mongoose.connect, en récupérant l'URI de la base de données via une variable d'environnement définie dans le fichier .env :
+Le backend utilise Mongoose pour se connecter à une base de données MongoDB :
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch((err) => console.error('Erreur de connexion à MongoDB :', err));
 
+L'URI de la base de données est récupérée depuis une variable d'environnement dans le fichier .env.
 Routes et Middlewares
+Middlewares
 
-    Middlewares :
-        express.json() : Permet de lire le corps des requêtes en JSON.
-        cors() : Active les requêtes cross-origin pour les appels API depuis le frontend.
-    Routes :
-        /api/project : Routes pour la gestion des projets (importées depuis ./routes/projectRoutes).
-        /api/auth : Routes d'authentification pour gérer l'inscription et la connexion des utilisateurs (importées depuis ./routes/authRoutes).
-        /images : Sert les images depuis le dossier images.
+    express.json() : Permet de lire les corps de requêtes en JSON.
+    express-rate-limit : Limite les requêtes pour éviter les abus.
+    auth : Middleware personnalisé pour sécuriser les routes avec des tokens JWT.
 
-Serveur du Frontend
+Routes
+Route	Description
+/api/auth	Gestion de l'authentification (inscription, connexion).
+/api/project	CRUD pour les projets.
+/api/contact	Formulaire de contact sécurisé avec ALTCHA Captcha.
+Sécurité et Limitations des Requêtes
 
-Le backend est configuré pour servir les fichiers statiques du frontend React dans un déploiement monolithique. Voici la ligne correspondante :
+Le backend implémente plusieurs mécanismes pour renforcer la sécurité :
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+    Limitation globale des requêtes :
 
-Gestion des Routes pour React Router
-
-Pour gérer les routes inconnues côté backend et rediriger vers le frontend, le serveur inclut cette route par défaut :
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+const globalLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60, // 60 requêtes par IP
 });
+app.use('/api', globalLimiter);
 
-Cela garantit que toutes les routes non reconnues sont redirigées vers l'application React, permettant ainsi à React Router de gérer les navigations côté client.
+Limitation pour le formulaire de contact :
+
+    const contactLimiter = rateLimit({
+      windowMs: 24 * 60 * 60 * 1000, // 24 heures
+      max: 3, // 3 requêtes par jour
+    });
+    app.use('/api/contact', contactLimiter, contactRoutes);
+
+    ALTCHA Captcha : Protection anti-spam pour le formulaire de contact.
+
 Démarrage en Local
 
-Pour exécuter le serveur en local :
+Pour exécuter le backend en local :
 
-    Clonez le dépôt et accédez au répertoire server.
-    Créez un fichier .env avec la variable MONGODB_URI contenant l'URI de votre base de données MongoDB.
-    Installez les dépendances avec npm install.
-    Lancez le serveur en mode développement avec npm run dev.
+    Clonez le dépôt :
 
-Rôle de heroku-postbuild dans une Architecture Monolithique
+git clone <URL-du-dépôt>
+cd server
 
-Dans une architecture monolithique :
+Créez un fichier .env avec les variables nécessaires :
 
-    heroku-postbuild exécute deux actions : elle installe les dépendances du client et construit le frontend dans le dossier client/build.
-    Le backend est configuré pour servir ce dossier client/build comme des fichiers statiques, ce qui permet au serveur Express de distribuer l'application frontend aux utilisateurs.
+MONGODB_URI=your-mongodb-uri
+JWT_SECRET=your-jwt-secret
+EMAIL_USER=your-email-user
+EMAIL_PASS=your-email-password
+ALTCHA_API_SECRET=your-altcha-secret
+
+Installez les dépendances :
+
+npm install
+
+Lancez le serveur en mode développement :
+
+    npm run dev
+
+Le serveur sera accessible sur http://localhost:3000.
+Déploiement sur Render
+
+Le backend est configuré pour servir le frontend en production :
+
+    Commandes de Render :
+        Root Directory : /server
+        Build Command : npm install && npm run heroku-postbuild
+        Start Command : npm start
+
+    Fonctionnement :
+        heroku-postbuild installe les dépendances backend et construit le frontend.
+        Les fichiers construits du frontend sont servis comme des fichiers statiques :
+
+        app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+Hébergement Indépendant Frontend et Backend
+
+Si vous souhaitez séparer le frontend et le backend :
+
+    Supprimez ou commentez :
+
+    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+    Déployez le frontend sur un service comme Netlify ou Vercel.
+
+    Configurez le frontend pour pointer vers l'API backend avec une URL d'environnement.
+
+Auteur
+
+Créé par Yoann Sousa.
+Pour toute question ou suggestion, contactez-moi à : contacter-moi@ysportfolio.fr

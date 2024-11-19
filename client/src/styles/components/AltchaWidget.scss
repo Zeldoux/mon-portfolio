@@ -11,9 +11,9 @@
     }
   
     &::part(footer) {
-      color: $color-black; /* Text color in the footer */
-      background-color: $color-black; /* Footer background */
-      border: none; /* Remove any footer-specific borders */
+      color: $color-black; 
+      background-color: $color-black; 
+      border: none; 
     }
   }
   
@@ -22,6 +22,6 @@
   }
   
   .altcha.svelte-ddsc3z {
-    border: none !important; /* Ensure border is removed */
+    border: none; 
   }
 }

@@ -60,15 +60,15 @@ p {
   filter: brightness(0); /* Turn the logo to black */
 }
 :root altcha-widget::part(footer) {
-  color: #000000; /* Text color in the footer */
-  background-color: #000000; /* Footer background */
-  border: none; /* Remove any footer-specific borders */
+  color: #000000;
+  background-color: #000000;
+  border: none;
 }
 :root fieldset {
   border: none; /* Remove the border of the fieldset */
 }
 :root .altcha.svelte-ddsc3z {
-  border: none !important; /* Ensure border is removed */
+  border: none;
 }
 
 .card {
@@ -97,8 +97,8 @@ p {
   padding: 10px;
   text-align: center;
   display: flex;
-  align-items: center; /* Vertically center the text */
-  justify-content: center; /* Horizontally center the text */
+  align-items: center;
+  justify-content: center;
 }
 
 .contact-section {

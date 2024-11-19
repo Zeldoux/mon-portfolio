@@ -1,28 +1,39 @@
+// Importing the Express framework
 const express = require("express");
 
+// Creating a new router instance for defining project-related routes
 const router = express.Router();
+
+// Importing the project controller that handles project-related logic
 const projectCtrl = require('../controllers/projectCtrl');
+
+// Importing authentication middleware to protect specific routes
 const auth = require('../middleware/auth');
 
-// Protected routes
+// Protected Routes - Require authentication
 
-// POST (add new project)
-router.post('/',auth, projectCtrl.createProject);
+// POST route for adding a new project
+// Middleware: Verifies the user token before allowing access
+// Controller: Handles the logic for creating a new project
+router.post('/', auth, projectCtrl.createProject);
 
+// PUT route for updating an existing project by its ID
 
-// PUT (updating a project)
-router.put('/:id',auth,projectCtrl.modifyProject);
+router.put('/:id', auth, projectCtrl.modifyProject);
 
-// DELETE (deleting a project)
-router.delete('/:id',auth,  projectCtrl.deleteProject);
+// DELETE route for deleting a project by its ID
 
+router.delete('/:id', auth, projectCtrl.deleteProject);
 
-// Public routes
+// Public Routes - Accessible without authentication
 
-// GET all project
-router.get('/',projectCtrl.getAllProject);
+// GET route for fetching all projects
+// Controller: Handles the logic for retrieving all projects
+router.get('/', projectCtrl.getAllProject);
 
-// GET a single project (ID)
-router.get('/:id',projectCtrl.getOneProject);
+// GET route for fetching a single project by its ID
+// Controller: Handles the logic for retrieving a specific project
+router.get('/:id', projectCtrl.getOneProject);
 
+// Exporting the router to be used in the main application
 module.exports = router;

@@ -1,0 +1,13 @@
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns for desktop */
+  gap: 30px; /* Space between cards */
+  justify-items: center;
+  color: #000000;
+}
+@media (max-width: 1000px) {
+  .project-list {
+    grid-template-columns: 1fr; /* One column for mobile */
+    gap: 20px;
+  }
+}/*# sourceMappingURL=ProjectList.css.map */

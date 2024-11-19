@@ -1,0 +1,1 @@
+{"version":3,"sources":["components/AltchaWidget.scss","AltchaWidget.css","abstracts/_variable.scss"],"names":[],"mappings":"AAIE;EACE,0BAAA,EAAA,4BAAA;EACA,kCAAA,EAAA,gCAAA;ACHJ;ADKI;EACE,qBAAA,EAAA,2BAAA;ACHN;ADMI;EACE,cETQ;EFUR,yBEVQ;EFWR,YAAA;ACJN;ADQE;EACE,YAAA,EAAA,sCAAA;ACNJ;ADSE;EACE,YAAA;ACPJ","file":"AltchaWidget.css"}

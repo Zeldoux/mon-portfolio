@@ -1,36 +1,68 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Layout from '../Layouts/Layout';
-import MainPage from '../Pages/MainPage/MainPage';
-import AdminPage from '../Pages/AdminPage/AdminPage';
-import ErrorPage from '../Pages/ErrorPage/ErrorPage';
-import ProtectedRoute from '../Router/ProtectedRoute';
+// src/Router/AppRouter.js
 
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // React Router components
+import Layout from '../Layouts/Layout'; // Main layout wrapper
+import MainPage from '../Pages/MainPage/MainPage'; // Main public page
+import AdminPage from '../Pages/AdminPage/AdminPage'; // Admin dashboard page
+import ErrorPage from '../Pages/ErrorPage/ErrorPage'; // Error page for handling 404 or unauthorized access
+import ProtectedRoute from '../Router/ProtectedRoute'; // Component for route protection
+
+/**
+ * Component: AppRouter
+ * 
+ * This component defines the application's routing structure using React Router.
+ * It manages public, protected, and error routes.
+ */
 const AppRouter = () => {
-    const token = localStorage.getItem('token'); // Dynamically read from localStorage
+    // Fetch the authentication token from localStorage
+    const token = localStorage.getItem('token'); 
 
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Layout><MainPage /></Layout>} />
+                {/* Public route: Main page */}
+                <Route 
+                    path="/" 
+                    element={
+                        <Layout>
+                            <MainPage />
+                        </Layout>
+                    } 
+                />
+
+                {/* Protected route: Admin page */}
                 <Route
                     path="/adminpage"
                     element={
                         <ProtectedRoute
-                            token={token} // Use latest token from localStorage
+                            token={token} // Pass the current token to validate access
                             message="Access denied. You are not authorized to view this page."
                         >
-                            <Layout><AdminPage /></Layout>
+                            <Layout>
+                                <AdminPage />
+                            </Layout>
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/error" element={<Layout><ErrorPage /></Layout>} />
+
+                {/* Public route: Error page */}
+                <Route 
+                    path="/error" 
+                    element={
+                        <Layout>
+                            <ErrorPage />
+                        </Layout>
+                    } 
+                />
+
+                {/* Catch-all route: Redirect to error page */}
                 <Route
                     path="*"
                     element={
                         <Navigate
-                            to="/error"
-                            replace
+                            to="/error" // Redirects to the error page for invalid routes
+                            replace // Replaces the current history entry
                             state={{ message: "Page not found. The page you are looking for does not exist." }}
                         />
                     }

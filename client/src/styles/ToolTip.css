@@ -1,0 +1,58 @@
+.custom-tooltip {
+  position: absolute;
+  pointer-events: none;
+  transition: all 0.1s ease;
+  transform: translate(-50%, -110%);
+  z-index: 9999;
+  max-width: 90vw; /* Constrain tooltip width to 90% of viewport width */
+  box-sizing: border-box; /* Ensure padding doesn't exceed the max width */
+  word-wrap: break-word; /* Prevent overflow of long text */
+}
+@media (max-width: 1000px) {
+  .custom-tooltip {
+    transform: translate(-50%, -100%); /* Adjust for smaller screen sizes */
+    left: 50%; /* Center horizontally */
+    bottom: 10%; /* Ensure it doesn't go below the screen */
+  }
+}
+
+.tooltip-content {
+  display: flex;
+  align-items: flex-start;
+  background-color: rgba(30, 30, 30, 0.9);
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 100%; /* Ensure tooltip content fits within tooltip container */
+  box-sizing: border-box;
+}
+@media (max-width: 1000px) {
+  .tooltip-content {
+    flex-direction: column; /* Stack logo and text vertically for smaller screens */
+    align-items: center; /* Center align content */
+    text-align: center; /* Center text */
+  }
+}
+
+.tooltip-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+@media (max-width: 1000px) {
+  .tooltip-logo {
+    margin-right: 0;
+    margin-bottom: 5px; /* Add space below logo */
+  }
+}
+
+.tooltip-content strong {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.tooltip-content p {
+  margin: 0;
+  font-size: 14px;
+}/*# sourceMappingURL=ToolTip.css.map */

@@ -1,25 +1,28 @@
+// Importing the Project model for database interaction
 const Project = require('../models/project');
 
+// Importing the file system module (currently unused, can be removed if not needed)
 const fs = require('fs');
 
-
+// Controller for creating a new project
 exports.createProject = (req, res, next) => {
   console.log('req.auth:', req.auth);
   console.log('req.body:', req.body);
 
+  // Ensure the user is authenticated
   if (!req.auth || !req.auth.userId) {
     console.error('User not authenticated');
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  const projectData = req.body;
-
+  // Create a new project instance with user ID and project data
   const project = new Project({
-    ...projectData,
+    ...req.body,
     userId: req.auth.userId,
-    imageUrl: req.body.imageUrl || [], // Expect an array of image URLs
+    imageUrl: req.body.imageUrl || [], // Handle image URLs as an array
   });
 
+  // Save the project to the database
   project.save()
     .then(() => res.status(201).json({ message: 'Project registered' }))
     .catch((error) => {
@@ -28,16 +31,16 @@ exports.createProject = (req, res, next) => {
     });
 };
 
+// Controller for updating an existing project
 exports.modifyProject = (req, res, next) => {
-  const ProjectObject = req.file
+  const projectData = req.file
     ? {
         ...JSON.parse(req.body.project),
-        userId: req.auth.userId,
         imageUrls: req.body.imageUrls || [],
       }
     : { ...req.body };
 
-  delete ProjectObject.userId;
+  delete projectData.userId; // Prevent user ID modification
 
   Project.findOne({ _id: req.params.id })
     .then((project) => {
@@ -46,7 +49,7 @@ exports.modifyProject = (req, res, next) => {
       } else {
         Project.updateOne(
           { _id: req.params.id },
-          { ...ProjectObject, _id: req.params.id }
+          { ...projectData, _id: req.params.id }
         )
           .then(() => res.status(200).json({ message: 'Object modified!' }))
           .catch((error) => res.status(401).json({ error }));
@@ -55,34 +58,31 @@ exports.modifyProject = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-
+// Controller for deleting a project
 exports.deleteProject = (req, res, next) => {
-     Project.findOne({ _id: req.params.id }) // Find the project in the DB
-    .then(project => {
-      if (project.userId != req.auth.userId) { // Check if user IDs match
-        res.status(401).json({ message: "Not authorized" });
+  Project.findOne({ _id: req.params.id })
+    .then((project) => {
+      if (project.userId != req.auth.userId) {
+        res.status(401).json({ message: 'Not authorized' });
       } else {
-        console.log("Deleted Project")
-        Project.deleteOne({ _id: req.params.id }) // Delete the project from the DB
-            .then(() => { res.status(200).json({ message: "Project Deleted" }) })
-            .catch(e => res.status(401).json({ e }));
-            
+        Project.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Project Deleted' }))
+          .catch((error) => res.status(401).json({ error }));
       }
     })
-    .catch(e => {
-      res.status(500).json({ e });
-    });
+    .catch((error) => res.status(500).json({ error }));
 };
 
-exports.getAllProject = (req,res,next) => {
-    Project.find()
-        .then(projects => res.status(200).json(projects))
-        .catch( e => res.status(400).json({e}));
-    
+// Controller for fetching all projects
+exports.getAllProject = (req, res, next) => {
+  Project.find()
+    .then((projects) => res.status(200).json(projects))
+    .catch((error) => res.status(400).json({ error }));
 };
 
+// Controller for fetching a single project by ID
 exports.getOneProject = (req, res, next) => {
-    Project.findOne({ _id: req.params.id })
-        .then(projects => res.status(200).json(projects))
-        .catch(error => res.status(404).json({ error }));
+  Project.findOne({ _id: req.params.id })
+    .then((project) => res.status(200).json(project))
+    .catch((error) => res.status(404).json({ error }));
 };

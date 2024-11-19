@@ -5,13 +5,10 @@ import LogoSVG from '../Assets/LogoSVG';
 function Profile() {
   return (
     <section className="profile section-container">
-      {/* Titre Principal */}
       <h2 className="title-banner">Yoann Sousa - Développeur Web</h2>
-      
-      {/* Contenu Principal */}
       <div className="profile-content">
         <div className="profile-text">
-          {/* Section À propos de moi */}
+          
           <div className="profile-section">
             <h3 className="section-title">À propos de moi</h3>
             <p className="profile-description">
@@ -26,10 +23,8 @@ function Profile() {
             </p>
           </div>
           
-          {/* Séparateur Visuel */}
           <div className="divider"></div>
           
-          {/* Section Expertise */}
           <div className="profile-section ">
             <h3 className="section-title">Expertise</h3>
             <p className="profile-description">
@@ -43,8 +38,6 @@ function Profile() {
             </p>
           </div>
         </div>
-        
-        {/* Logo */}
         <div className="logo-container">
           <LogoSVG className="landing-logo" />
         </div>

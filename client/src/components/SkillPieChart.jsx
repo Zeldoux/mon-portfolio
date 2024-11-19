@@ -2,17 +2,22 @@
 
 import React, { useRef, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
-
 import { Chart as ChartJS, registerables } from 'chart.js';
 
-// Register all necessary Chart.js components
+// Register all necessary components for Chart.js
 ChartJS.register(...registerables);
 
+/**
+ * Component: SkillPieChart
+ * Displays a pie chart for a skill category, with custom tooltips and skill logos drawn in each chart slice.
+ * 
+ * @param {Object} category - Skill category data containing skills and their associated details.
+ */
 function SkillPieChart({ category }) {
-  // Reference to the chart instance
+  // Reference for the chart instance
   const chartRef = useRef(null);
 
-  // Cleanup effect to remove the tooltip element when the component unmounts
+  // Cleanup effect to remove the tooltip element on component unmount
   useEffect(() => {
     return () => {
       const tooltipEl = document.getElementById('chartjs-tooltip');
@@ -22,33 +27,38 @@ function SkillPieChart({ category }) {
     };
   }, []);
 
-  // Create an object to store loaded images
+  // Object to cache loaded skill logos
   const loadedImages = {};
 
-  // Data for the chart
+  // Data configuration for the pie chart
   const pieData = {
-    labels: category.skills.map((skill) => skill.name),
+    labels: category.skills.map((skill) => skill.name), // Labels are the skill names
     datasets: [
       {
-        label: category.category,
+        label: category.category, // Dataset label is the category name
         data: category.skills.map((skill) =>
           skill.level === 'Expert' ? 100 : skill.level === 'Advanced' ? 75 : 50
-        ),
-        backgroundColor: category.skills.map(() => 'rgba(30, 30, 30, 0.3)'),
-        hoverBackgroundColor: category.skills.map(() => 'rgba(50, 50, 50, 0.8)'),
-        borderColor: 'rgba(255, 255, 255, 0.8)',
-        borderWidth: 1,
+        ), // Skill levels mapped to numerical values
+        backgroundColor: category.skills.map(() => 'rgba(30, 30, 30, 0.3)'), // Background colors
+        hoverBackgroundColor: category.skills.map(() => 'rgba(50, 50, 50, 0.8)'), // Hover colors
+        borderColor: 'rgba(255, 255, 255, 0.8)', // Border color
+        borderWidth: 1, // Border width
       },
     ],
   };
 
-  // External tooltip handler function
+  /**
+   * Function: externalTooltipHandler
+   * Handles the rendering of custom tooltips for the pie chart.
+   * 
+   * @param {Object} context - The Chart.js context object containing chart and tooltip details.
+   */
   function externalTooltipHandler(context) {
     const { chart, tooltip } = context;
 
     let tooltipEl = document.getElementById('chartjs-tooltip');
 
-    // Create tooltip element on first render
+    // Create the tooltip element if it doesn't exist
     if (!tooltipEl) {
       tooltipEl = document.createElement('div');
       tooltipEl.id = 'chartjs-tooltip';
@@ -62,11 +72,10 @@ function SkillPieChart({ category }) {
       return;
     }
 
-    // Set the content of the tooltip
+    // Set the tooltip content if data exists
     if (tooltip.body && tooltip.dataPoints && tooltip.dataPoints.length > 0) {
       const index = tooltip.dataPoints[0].dataIndex;
 
-      // Check if the index is valid
       if (category.skills && category.skills[index]) {
         const skill = category.skills[index];
 
@@ -79,47 +88,39 @@ function SkillPieChart({ category }) {
           </div>
         `;
       } else {
-        // Hide the tooltip if the skill doesn't exist
-        tooltipEl.style.opacity = 0;
+        tooltipEl.style.opacity = 0; // Hide if skill is not found
         return;
       }
     } else {
-      // Hide the tooltip if there's no data
-      tooltipEl.style.opacity = 0;
+      tooltipEl.style.opacity = 0; // Hide if no tooltip data
       return;
     }
 
     // Position the tooltip
     const position = chart.canvas.getBoundingClientRect();
-
-    // Display, position, and style the tooltip
     tooltipEl.style.opacity = 1;
     tooltipEl.style.position = 'absolute';
-    tooltipEl.style.left =
-      position.left + window.pageXOffset + tooltip.caretX + 'px';
-    tooltipEl.style.top =
-      position.top + window.pageYOffset + tooltip.caretY + 'px';
-    tooltipEl.style.pointerEvents = 'none';
+    tooltipEl.style.left = position.left + window.pageXOffset + tooltip.caretX + 'px';
+    tooltipEl.style.top = position.top + window.pageYOffset + tooltip.caretY + 'px';
+    tooltipEl.style.pointerEvents = 'none'; // Prevent interactions
   }
 
-  // Chart options with external tooltip handler
+  // Configuration for the pie chart options
   const pieOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    layout: {
-      padding: 15,
-    },
+    layout: { padding: 15 },
     plugins: {
-      legend: { display: false },
+      legend: { display: false }, // Disable legend
       tooltip: {
-        enabled: false, // Disable the default tooltip
-        external: externalTooltipHandler, // Use our external tooltip handler
+        enabled: false, // Disable default tooltip
+        external: externalTooltipHandler, // Use custom tooltip handler
       },
     },
-    hoverOffset: 20,
+    hoverOffset: 20, // Offset for hover effect
   };
 
-  // Plugin to draw logos in each slice of the chart
+  // Plugin to draw skill logos inside chart slices
   const drawLogosPlugin = {
     id: 'drawLogos',
     afterDatasetDraw(chart) {
@@ -129,33 +130,25 @@ function SkillPieChart({ category }) {
       dataset.data.forEach((data, index) => {
         const meta = chart.getDatasetMeta(0).data[index];
 
-        // Check if the skill exists
         if (category.skills && category.skills[index]) {
           const skill = category.skills[index];
 
-          // Check if the image is already loaded
+          // Load or retrieve cached image for skill logo
           let skillLogo = loadedImages[skill.logo];
-
           if (!skillLogo) {
-            // If the image is not loaded, load it
             skillLogo = new Image();
             skillLogo.src = skill.logo;
 
-            // Store the image in loadedImages once it's loaded
             skillLogo.onload = () => {
               loadedImages[skill.logo] = skillLogo;
-
-              // Redraw the chart to display the loaded image
               if (chart && chart.ctx) {
                 chart.update();
               }
             };
-
-            // Store the image even if it's not yet loaded to avoid reloading
-            loadedImages[skill.logo] = skillLogo;
+            loadedImages[skill.logo] = skillLogo; // Cache image
           }
 
-          // Draw the image if it's loaded
+          // Draw image if it's loaded
           if (skillLogo.complete) {
             const { x, y } = meta.tooltipPosition();
             const logoSize = 35;

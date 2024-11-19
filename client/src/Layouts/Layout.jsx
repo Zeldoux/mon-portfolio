@@ -8,7 +8,7 @@ import Header from '../components/Header'; // Header component with navigation
 import Footer from '../components/Footer'; // Footer component
 import LoginForm from '../components/LoginForm'; // Login form for authentication
 import '../styles/Layout.css'; // Import styles for layout
-
+import MobileButton from '../components/MobileButton'; // mobile button for mobile scroll back to top button functionality
 /**
  * Component: Layout
  * 
@@ -59,7 +59,8 @@ const Layout = ({ children }) => {
       <main className="main-page">
         {children} {/* Render child components */}
       </main>
-
+      {/* Mobile Button */}
+      <MobileButton />
       {/* Footer section */}
       <Footer />
 

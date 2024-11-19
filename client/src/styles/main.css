@@ -1,6 +1,7 @@
 html {
   font-size: 100%; /* Default is 16px (1rem) */
   scroll-behavior: smooth;
+  scroll-padding-top: 70px;
 }
 
 body {
@@ -52,6 +53,39 @@ p {
   font-display: swap;
   src: url("../Assets/fonts/RobotoMono-VariableFont.ttf") format("truetype");
 }
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-image: url("https://res.cloudinary.com/zeldoux/image/upload/v1732045642/up-arrow-png-27176_ybhtk4.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  /* Initial semi-transparent state */
+  opacity: 0.6;
+  transition: opacity 0.3s ease-in-out;
+}
+.scroll-to-top:hover {
+  /* Fully opaque on hover */
+  opacity: 1;
+}
+.scroll-to-top.visible {
+  /* Ensure visibility when scrolling down */
+  display: block;
+  opacity: 0.6;
+}
+@media (min-width: 769px) {
+  .scroll-to-top {
+    display: none; /* Hide on larger screens */
+  }
+}
+
 :root altcha-widget {
   --altcha-border-width: 0px; /* Remove the border width */
   --altcha-color-border: transparent; /* Make the border transparent */

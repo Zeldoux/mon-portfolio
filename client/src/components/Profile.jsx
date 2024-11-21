@@ -12,9 +12,11 @@ function Profile() {
           <div className="profile-section">
             <h3 className="section-title">À propos de moi</h3>
             <p className="profile-description">
-              Autodidacte passionné, je m’investis dans le développement web depuis plusieurs années. 
-              Créatif et curieux, je conçois des expériences utilisateur intuitives et accessibles, 
-              en mettant l’accent sur le design et l’innovation.
+              Autodidacte passionné, je m’investis dans le développement web depuis plusieurs années. <br />
+              Créatif et curieux, j’ai récemment suivi une formation certifiante sur OpenClassrooms 
+              pour devenir Développeur Web. <br />
+              Cette expérience m’a permis d’approfondir mes compétences techniques et de travailler sur 
+              divers projets pratiques, dont certains sont présentés ci-dessous.
             </p>
             <p className="profile-description mobile-hide">
               Toujours prêt à relever de nouveaux défis, je m’intéresse aussi à l’open-source 
@@ -28,7 +30,7 @@ function Profile() {
           <div className="profile-section ">
             <h3 className="section-title">Expertise</h3>
             <p className="profile-description">
-              Polyvalent, je maîtrise les technologies front-end comme Javascript et JSReact et CSS, SCSS 
+              Polyvalent, je maîtrise les technologies front-end comme Javascript et React et CSS, SCSS 
               ainsi que le back-end avec Node.js, MongoDB. et MySQL Je suis également familier avec 
               les pratiques DevOps et l’intégration continue.
             </p>

@@ -37,6 +37,12 @@
           "level": "Intermediate",
           "logo":"https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1732304841/pngwing.com_3_blqo5t.png",
           "description": "Framework minimaliste pour Node.js facilitant la création d'API et de serveurs web robustes et modulaires."
+        },
+        {
+          "name": "MongoDB",
+          "level": "Intermediate",
+          "logo": "https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1731343033/MongoDB_oo3o9n.png",
+          "description": "Base de données NoSQL orientée document, idéale pour gérer des données non structurées."
         }
       ]
     },
@@ -54,12 +60,6 @@
           "level": "Intermediate",
           "logo": "https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1731342957/MySQL_stlfuj.png",
           "description": "Système de gestion de bases de données relationnelles performant et open-source."
-        },
-        {
-          "name": "MongoDB",
-          "level": "Intermediate",
-          "logo": "https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1731343033/MongoDB_oo3o9n.png",
-          "description": "Base de données NoSQL orientée document, idéale pour gérer des données non structurées."
         }
       ]
     },

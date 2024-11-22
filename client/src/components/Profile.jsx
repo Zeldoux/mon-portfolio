@@ -16,7 +16,7 @@ function Profile() {
               Créatif et curieux, j’ai récemment suivi une formation certifiante sur OpenClassrooms 
               pour devenir Développeur Web. <br />
               Cette expérience m’a permis d’approfondir mes compétences techniques et de travailler sur 
-              divers projets pratiques, dont certains sont présentés ci-dessous.
+              divers projets pratiques, dont certains sont présentés ci-dessous.<br />
             </p>
             <p className="profile-description mobile-hide">
               Toujours prêt à relever de nouveaux défis, je m’intéresse aussi à l’open-source 

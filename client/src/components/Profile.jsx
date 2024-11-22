@@ -18,11 +18,6 @@ function Profile() {
               Cette expérience m’a permis d’approfondir mes compétences techniques et de travailler sur 
               divers projets pratiques, dont certains sont présentés ci-dessous.<br />
             </p>
-            <p className="profile-description mobile-hide">
-              Toujours prêt à relever de nouveaux défis, je m’intéresse aussi à l’open-source 
-              et à la transmission des connaissances, que ce soit à travers des articles, 
-              du mentoring ou des projets communautaires.
-            </p>
           </div>
           
           <div className="divider"></div>
@@ -31,7 +26,7 @@ function Profile() {
             <h3 className="section-title">Expertise</h3>
             <p className="profile-description">
               Polyvalent, je maîtrise les technologies front-end comme Javascript et React et CSS, SCSS 
-              ainsi que le back-end avec Node.js, MongoDB. et MySQL Je suis également familier avec 
+              ainsi que le back-end avec Node.js , express mais aussi la gestion de données avec MongoDB. et MySQL Je suis également familier avec 
               les pratiques DevOps et l’intégration continue.
             </p>
             <p className="profile-description mobile-hide">

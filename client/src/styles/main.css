@@ -23,12 +23,12 @@ p {
 
 @media (max-width: 768px) {
   html {
-    font-size: 90%; /* Scales down for smaller devices */
+    font-size: 110%; /* Scales down for smaller devices */
   }
 }
 @media (max-width: 480px) {
   html {
-    font-size: 85%; /* Further scales down for very small devices */
+    font-size: 120%; /* Further scales down for very small devices */
   }
 }
 *,

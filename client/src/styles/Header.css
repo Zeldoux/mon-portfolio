@@ -80,7 +80,11 @@ main {
   }
   .header nav .nav-links {
     margin-left: 0;
-    gap: 1.5rem;
+    gap: 1rem;
     padding-top: 0.5rem;
+  }
+  .header nav .nav-links a {
+    padding: 0;
+    font-size: 1rem;
   }
 }/*# sourceMappingURL=Header.css.map */

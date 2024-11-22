@@ -16,7 +16,7 @@
         },
         {
           "name": "CSS",
-          "level": "Expert",
+          "level": "Intermediate",
           "logo": "https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1731341580/css_ed69gl.png",
           "description": "Langage de style utilisé pour définir l'apparence visuelle et la mise en page des sites web."
         },
@@ -35,7 +35,7 @@
         {
           "name": "ExpressJS",
           "level": "Intermediate",
-          "logo":"https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1732303750/pngwing.com_1_qjhw93.png",
+          "logo":"https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1732304841/pngwing.com_3_blqo5t.png",
           "description": "Framework minimaliste pour Node.js facilitant la création d'API et de serveurs web robustes et modulaires."
         }
       ]

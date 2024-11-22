@@ -31,6 +31,12 @@
           "level": "Intermediate",
           "logo": "https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1731342214/node-js_gchm8l.png",
           "description": "Environnement d'exécution JavaScript côté serveur permettant de créer des applications web rapides et évolutives."
+        },
+        {
+          "name": "ExpressJS",
+          "level": "Intermediate",
+          "logo":"https://res.cloudinary.com/zeldoux/image/upload/q_auto,f_auto/v1732303750/pngwing.com_1_qjhw93.png",
+          "description": "Framework minimaliste pour Node.js facilitant la création d'API et de serveurs web robustes et modulaires."
         }
       ]
     },

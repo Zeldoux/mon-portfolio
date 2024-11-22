@@ -83,7 +83,11 @@ function Contact() {
       // Handle non-OK responses
       if (!response.ok) {
         let errorMessage;
-
+              // Reset the ALTCHA widget
+        const widget = document.querySelector('altcha-widget');
+        if (widget) {
+          widget.reset();
+        }
         // Attempt to parse the error message from the response
         try {
           const errorData = await response.json();
@@ -101,6 +105,11 @@ function Contact() {
       setFormStatus('Message envoyé avec succès !');
       setFormData({ name: '', email: '', message: '' });
       altchaPayloadRef.current = null; // Reset ALTCHA token
+      // Reset the ALTCHA widget
+      const widget = document.querySelector('altcha-widget');
+      if (widget) {
+        widget.reset();
+      }
     } catch (error) {
       console.error('Error:', error);
     } finally {
